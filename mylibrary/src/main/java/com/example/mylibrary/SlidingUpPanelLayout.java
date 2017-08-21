@@ -1332,6 +1332,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
         super.onRestoreInstanceState(state);
     }
 
+
     private class DragHelperCallback extends ViewDragHelper.Callback {
 
         @Override
@@ -1408,6 +1409,8 @@ public class SlidingUpPanelLayout extends ViewGroup {
             }
             invalidate();
         }
+
+
 
         @Override
         public int getViewVerticalDragRange(View child) {

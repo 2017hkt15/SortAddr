@@ -90,6 +90,31 @@ public class ListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //TODO: 입력하는 Activity로 이동
+                final CharSequence[] selection = {"명칭 검색","주소 검색"};
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                dialog.setTitle("알림");
+                dialog.setSingleChoiceItems(selection, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(context,selection[which],Toast.LENGTH_SHORT).show();
+                        if(which==0) {
+                            Intent intent = new Intent(context, AutoCompleteActivity.class);
+                            intent.putExtra("position", pos);
+                            inputActivity.startActivityForResult(intent, 10);
+                            dialog.cancel();
+                        }
+                        else {
+                            Intent intent1 = new Intent(context, FullAddressActivty.class);
+                            intent1.putExtra("position",pos);
+                            //inputActivity.startActivity(intent);
+                            inputActivity.startActivityForResult(intent1,2);
+                            dialog.cancel();
+                        }
+                    }
+                });
+                AlertDialog alertDialog = dialog.create();
+                alertDialog.show();
+                /*Intent intent = new Intent(context, AutoCompleteActivity.class);
                 Intent intent = new Intent(context, AutoCompleteActivity.class);
                 //position값 보냄
                 if (pos != 0) {

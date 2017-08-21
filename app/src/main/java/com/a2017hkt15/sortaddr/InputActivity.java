@@ -275,6 +275,10 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         } else if (resultCode == RESULT_CANCELED) {
 
         }
+        else if (resultCode == RESULT_CANCELED) {
+                    Log.i("string","stri");
+        }
+
     }
 
     public int getButton_pos() {
