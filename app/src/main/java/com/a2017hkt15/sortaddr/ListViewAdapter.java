@@ -77,7 +77,7 @@ public class ListViewAdapter extends BaseAdapter {
                     listViewWayList.remove(pos);
                     Variable.numberOfLine--;
                     notifyDataSetChanged();
-                } else {
+                } else if(pos!=0){
                     listViewWayList.remove(pos);
                     Variable.numberOfLine--;
                     notifyDataSetChanged();
