@@ -1,9 +1,11 @@
 package com.a2017hkt15.sortaddr;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +79,7 @@ public class ListViewAdapter extends BaseAdapter {
                     listViewWayList.remove(pos);
                     Variable.numberOfLine--;
                     notifyDataSetChanged();
-                } else {
+                } else if(pos!=0){
                     listViewWayList.remove(pos);
                     Variable.numberOfLine--;
                     notifyDataSetChanged();
@@ -90,7 +92,28 @@ public class ListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //TODO: 입력하는 Activity로 이동
-                Intent intent = new Intent(context, AutoCompleteActivity.class);
+                final CharSequence[] selection = {"명칭 검색","주소 검색"};
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                dialog.setTitle("알림");
+                dialog.setSingleChoiceItems(selection, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context,selection[which],Toast.LENGTH_SHORT).show();
+                        if(which==0) {
+                            Intent intent = new Intent(context, AutoCompleteActivity.class);
+
+                            intent.putExtra("position", pos);
+                            inputActivity.startActivityForResult(intent, 1);
+                            dialog.cancel();
+                        }
+                        else {
+
+                        }
+                    }
+                });
+                AlertDialog alertDialog = dialog.create();
+                alertDialog.show();
+                /*Intent intent = new Intent(context, AutoCompleteActivity.class);
                 //position값 보냄
                 if (pos != 0) {
                     try {
@@ -107,7 +130,7 @@ public class ListViewAdapter extends BaseAdapter {
 
                     }
                 intent.putExtra("position", pos);
-                inputActivity.startActivityForResult(intent, 1);   //pos
+                inputActivity.startActivityForResult(intent, 1);   //pos*/
             }
         });
 
