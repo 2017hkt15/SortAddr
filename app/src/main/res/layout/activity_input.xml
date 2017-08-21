@@ -79,10 +79,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/dontUseRadioButton"
+            <CheckBox
+                android:id="@+id/comeBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
 
             <ImageButton
                 android:id="@+id/addimageButton"

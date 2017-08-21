@@ -38,7 +38,7 @@ public class PathBasic {
     }
 
     // 리스트에 있는 마커끼리의 거리를 계산해 거리 배열에 저장
-    public void calcDistancePath(ArrayList<TMapMarkerItem> markerList) {
+    public void calcDistancePath(ArrayList<TMapMarkerItem> markerList, boolean comeback) {
         this.removePath();
         this.distanceCalcThread = new DistanceCalcThread(tmapdata);
 
@@ -52,6 +52,7 @@ public class PathBasic {
                 }
             }
         }
+
         distanceCalcThread.setPoint(pathPoint, markerList.size());
         distanceCalcThread.start();
         synchronized (distanceCalcThread) {
@@ -61,6 +62,17 @@ public class PathBasic {
                 e.printStackTrace();
             }
         }
+
+        if(comeback)
+        {
+            markerController.setEndIndex(0);
+        }
+        else
+        {
+            markerController.setEndIndex(-1);
+        }
+
+
         distanceArr = distanceCalcThread.getDistanceArr();
         CalcPath calcPath = new CalcPath(0, markerController.getMarkerList().size(), distanceArr, markerController.getEndIndex());
         this.showPath(calcPath.pathCalc());

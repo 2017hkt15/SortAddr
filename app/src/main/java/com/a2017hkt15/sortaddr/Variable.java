@@ -10,5 +10,5 @@ public class Variable {
     public static int numberOfLine = 0;
     public static String mapApiKey = "24021907-d553-3d4f-b555-0155ca3ccadb";
     public static int nodeNum=0;
-//    public static RadioGroup radioGroup = new RadioGroup()
+    public static RadioGroup radioGroup;
 }

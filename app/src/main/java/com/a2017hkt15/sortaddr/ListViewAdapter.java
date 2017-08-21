@@ -1,12 +1,9 @@
 package com.a2017hkt15.sortaddr;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.test.ActivityUnitTestCase;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +26,6 @@ public class ListViewAdapter extends BaseAdapter {
     private InputActivity inputActivity;
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewWay> listViewWayList = new ArrayList<>();
-
-    private RadioButton radioButton;
 
     // ListViewAdapter의 생성자
     public ListViewAdapter(InputActivity inputActivity) {
@@ -61,9 +55,6 @@ public class ListViewAdapter extends BaseAdapter {
         ImageButton imageButtonDelete = (ImageButton) convertView.findViewById(R.id.imageButtonDelete);
         TextView titleTextView = (TextView) convertView.findViewById(R.id.textViewTitle);
         EditText wayEditText = (EditText) convertView.findViewById(R.id.editTextWay);
-        radioButton = (RadioButton) convertView.findViewById(R.id.LastDestinationRadioButton);
-
-
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewWay listViewWay = listViewWayList.get(position);
@@ -78,7 +69,6 @@ public class ListViewAdapter extends BaseAdapter {
                     inputActivity.getAddressInfo_array().remove(pos);
                     //해당 장소의 마커 삭제
                     inputActivity.getMarkerController().removeMarker(pos);
-                    Variable.nodeNum--;
                     // listViewWayList.remove(pos);
                     // Variable.numberOfLine--;
                     // notifyDataSetChanged();    삭제해도 되는 듯
@@ -87,7 +77,7 @@ public class ListViewAdapter extends BaseAdapter {
                     listViewWayList.remove(pos);
                     Variable.numberOfLine--;
                     notifyDataSetChanged();
-                } else if(pos!=0){
+                } else {
                     listViewWayList.remove(pos);
                     Variable.numberOfLine--;
                     notifyDataSetChanged();
@@ -100,30 +90,7 @@ public class ListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //TODO: 입력하는 Activity로 이동
-                final CharSequence[] selection = {"명칭 검색","주소 검색"};
-                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                dialog.setTitle("알림");
-                dialog.setSingleChoiceItems(selection, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Toast.makeText(context,selection[which],Toast.LENGTH_SHORT).show();
-                        if(which==0) {
-                            Intent intent = new Intent(context, AutoCompleteActivity.class);
-                            intent.putExtra("position", pos);
-                            inputActivity.startActivityForResult(intent, 1);
-                            dialog.cancel();
-                        }
-                        else {
-                            Intent intent = new Intent(context, FullAddressActivty.class);
-                            intent.putExtra("position",pos);
-                            inputActivity.startActivityForResult(intent,1);
-                            dialog.cancel();
-                        }
-                    }
-                });
-                AlertDialog alertDialog = dialog.create();
-                alertDialog.show();
-                /*Intent intent = new Intent(context, AutoCompleteActivity.class);
+                Intent intent = new Intent(context, AutoCompleteActivity.class);
                 //position값 보냄
                 if (pos != 0) {
                     try {
@@ -140,7 +107,7 @@ public class ListViewAdapter extends BaseAdapter {
 
                     }
                 intent.putExtra("position", pos);
-                inputActivity.startActivityForResult(intent, 1);   //pos*/
+                inputActivity.startActivityForResult(intent, 1);   //pos
             }
         });
 
