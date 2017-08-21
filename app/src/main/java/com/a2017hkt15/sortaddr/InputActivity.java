@@ -159,7 +159,6 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         // 마커, 경로 관련 클래스
         markerController = new MarkerController(tmapview, startIcon, passIcon, numberIcon, endIcon, poiIcon);
         pathBasic = new PathBasic(tmapview, markerController);
-        Button findButton = (Button) findViewById(R.id.button_find);
         mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
     }
 

@@ -77,7 +77,7 @@ public class PathBasic {
 
             if (pathRoute[cur + 1] != markerController.getEndIndex())
                 markerController.setMarkerNumber(pathRoute[cur + 1], cur + 1);
-            markerController.getMarkerList().get(pathRoute[cur+1]).setCalloutTitle(markerController.getMarkerList().get(pathRoute[cur+1]).getCalloutTitle() + " (" + Math.round(distanceSum) + "km)");
+            markerController.getMarkerList().get(pathRoute[cur+1]).setCalloutSubTitle("(" + Math.round(distanceSum) + "km)");
 
             TMapPolyLine polyLine = distanceCalcThread.getPathLine()[pathRoute[cur]][pathRoute[cur + 1]];
             polyLine.setLineColor(Color.BLUE);
@@ -86,7 +86,8 @@ public class PathBasic {
             pathID++;
 
             if ( markerController.getEndIndex() == 0 && cur == markerList.size() - 2) {
-                markerController.getMarkerList().get(pathRoute[cur+1]).setCalloutTitle(markerController.getMarkerList().get(pathRoute[0]).getCalloutTitle() + " (" + Math.round(distanceSum) + "km)");
+                distanceSum += distanceArr[pathRoute[markerList.size() - 1]][0] / 1000d;
+                markerController.getMarkerList().get(pathRoute[cur+1]).setCalloutSubTitle("(" + Math.round(distanceSum) + "km)");
                 polyLine = (distanceCalcThread.getPathLine())[pathRoute[markerList.size() - 1]][0];
                 polyLine.setLineColor(Color.BLUE);
                 polyLine.setLineWidth(5);
