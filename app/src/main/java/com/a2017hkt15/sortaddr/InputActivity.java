@@ -10,8 +10,12 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.skp.Tmap.TMapGpsManager;
 import com.skp.Tmap.TMapView;
@@ -23,6 +27,16 @@ import java.util.ArrayList;
  */
 
 public class InputActivity extends AppCompatActivity implements TMapGpsManager.onLocationChangedCallback {
+    private MarkerController markerController;
+    private PathBasic pathBasic;
+    private int button_pos;
+    private ListView listview;
+    private ListViewAdapter adapter;
+    String address_lat_lon;
+    float lat;
+    float lon;
+    static ProgressDialog progressDialog;
+
     private TMapGpsManager tmapgps = null;
     private TMapView tmapview = null;
 
@@ -68,6 +82,33 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
 
         layoutForMap.addView(tmapview);
 
+        // Adapter 생성
+        adapter = new ListViewAdapter(this);
+
+        // 리스트뷰 참조 및 Adapter달기
+        listview = (ListView) findViewById(R.id.wayListView1);
+        listview.setAdapter(adapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+        // 첫 번째 아이템 추가.
+        adapter.addItem("출발지");
+
+        addLine();
+        addLine();
+        addLine();
+
+        ImageButton addimageButton = (ImageButton) findViewById(R.id.addimageButton);
+        addimageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addLine();
+            }
+        });
+
 
         // 현재 위치 마커 아이콘 리소스 불러온 후 적용
         Context context = getApplicationContext();
@@ -105,5 +146,13 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addLine() {
+        if (Variable.numberOfLine < 10) {
+            adapter.addItem("목적지");
+        } else {
+            Toast.makeText(getApplicationContext(), "최대 갯수에 도달했습니다.", Toast.LENGTH_LONG).show();
+        }
     }
 }
