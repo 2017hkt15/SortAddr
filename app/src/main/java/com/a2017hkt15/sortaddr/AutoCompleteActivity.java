@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,12 +28,12 @@ public class AutoCompleteActivity extends AppCompatActivity {
     static double lat;
     static double lon;
     String address;
-
+    EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auto_complete);
-
+       editText = (EditText) findViewById(R.id.edit);
         //툴바 세팅
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_auto_complete);
         setSupportActionBar(toolbar);
@@ -52,6 +53,16 @@ public class AutoCompleteActivity extends AppCompatActivity {
 
         TMapView tmapview = new TMapView(this);
         tmapview.setSKPMapApiKey(Variable.mapApiKey);
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    onClick(v);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -71,7 +82,7 @@ public class AutoCompleteActivity extends AppCompatActivity {
 
         final ArrayList<String> addressList = new ArrayList<>();
         // String address;
-        final EditText editText = (EditText) findViewById(R.id.edit);
+
         address = editText.getText().toString();
 
         //address가 장소 이름 edittext로 부터 받아옴
