@@ -56,7 +56,52 @@ public class ListViewAdapter extends BaseAdapter {
         TextView titleTextView = (TextView) convertView.findViewById(R.id.textViewTitle);
         EditText wayEditText = (EditText) convertView.findViewById(R.id.editTextWay);
 
+        // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
+        ListViewWay listViewWay = listViewWayList.get(position);
+        //초기값
+        inputActivity.setButton_pos(-1);
+        imageButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pos != 0 && pos + 1 <= inputActivity.getAddressInfo_array().size()) {
 
+                    //해당 arraylist의 값을 삭제
+                    inputActivity.getAddressInfo_array().remove(pos);
+                    //해당 장소의 마커 삭제
+                    inputActivity.getMarkerController().removeMarker(pos);
+                    // listViewWayList.remove(pos);
+                    // Variable.numberOfLine--;
+                    // notifyDataSetChanged();    삭제해도 되는 듯
+                }
+                if (pos >= inputActivity.getAddressInfo_array().size() + 1) {
+                    listViewWayList.remove(pos);
+                    Variable.numberOfLine--;
+                    notifyDataSetChanged();
+                }
+                else {
+                    listViewWayList.remove(pos);
+                    Variable.numberOfLine--;
+                    notifyDataSetChanged();
+                }
+
+            }
+        });
+
+        wayEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: 입력하는 Activity로 이동
+                Intent intent = new Intent(context, AutoCompleteActivity.class);
+                //position값 보냄
+                intent.putExtra("position", pos);
+                inputActivity.startActivityForResult(intent, 1);   //pos
+            }
+        });
+
+        // 아이템 내 각 위젯에 데이터 반영
+        imageButtonDelete.setImageDrawable(listViewWay.getDeleteImage());
+        titleTextView.setText(listViewWay.getTitleStr());
+        wayEditText.setText(listViewWay.getAddrStr());
 
         return convertView;
     }
