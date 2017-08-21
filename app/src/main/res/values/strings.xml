@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">SortAddr</string>
+    <string name="app_name">최적 경로 탐색기</string>
+    <string name="starting">시작지</string>
+    <string name="way1">경유지1</string>
+    <string name="destination">목적지</string>
+    <string name="find">검색</string>
 </resources>
