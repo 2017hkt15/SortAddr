@@ -781,6 +781,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 childWidthSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
             } else {
                 childWidthSpec = MeasureSpec.makeMeasureSpec(lp.width, MeasureSpec.EXACTLY);
+
             }
 
             int childHeightSpec;
