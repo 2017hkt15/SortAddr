@@ -115,11 +115,17 @@ public class MarkerController {
             tmapView.addMarkerItem(markerList.get(endIndex).getID(), markerList.get(endIndex));
         }
 
-        this.endIndex =  index;
-        this.isEndExist = true;
-        markerList.get(index).setIcon(endMarkerIcon);
-        tmapView.removeMarkerItem(markerList.get(index).getID());
-        tmapView.addMarkerItem(markerList.get(index).getID(), markerList.get(index));
+        if (index == 0) {
+            this.endIndex = index;
+            this.isEndExist = true;
+        }
+        else {
+            this.endIndex = index;
+            this.isEndExist = true;
+            markerList.get(index).setIcon(endMarkerIcon);
+            tmapView.removeMarkerItem(markerList.get(index).getID());
+            tmapView.addMarkerItem(markerList.get(index).getID(), markerList.get(index));
+        }
     }
 
     public int getEndIndex() {

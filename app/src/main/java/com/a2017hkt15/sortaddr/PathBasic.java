@@ -75,7 +75,6 @@ public class PathBasic {
             markerController.setMarkerNumber(pathRoute[cur + 1], cur + 1);
 
             TMapPolyLine polyLine = distanceCalcThread.getPathLine()[pathRoute[cur]][pathRoute[cur + 1]];
-            polyLine.setID(pathID + "");
             polyLine.setLineColor(Color.BLUE);
             polyLine.setLineWidth(5);
             tmapView.addTMapPolyLine(pathID + "Route", polyLine);
@@ -97,6 +96,13 @@ public class PathBasic {
                 }
             });
             */
+        }
+        if (markerController.getEndIndex() == 0) {
+            TMapPolyLine polyLine = distanceCalcThread.getPathLine()[pathRoute[markerList.size() - 1]][0];
+            polyLine.setLineColor(Color.BLUE);
+            polyLine.setLineWidth(5);
+            tmapView.addTMapPolyLine(pathID + "Route", polyLine);
+            pathID++;
         }
     }
 
