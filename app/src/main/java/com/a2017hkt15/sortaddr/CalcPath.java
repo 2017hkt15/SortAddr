@@ -1,5 +1,7 @@
 package com.a2017hkt15.sortaddr;
 
+import android.util.Log;
+
 /**
  * Created by 함상혁입니다 on 2017-08-21.
  */
@@ -36,8 +38,12 @@ public class CalcPath {
     {
         PathInfo ret=new PathInfo();
 
-
+        Log.d("ssss","calc start, destination : "+destination+", strat :"+start+", num : "+nodeNum);
+        Log.d("ssss","map : "+map[0][0]+","+map[0][1]+","+map[0][2]);
         preCalcDfs(1,new int[10],0);
+        Log.d("ssss","calc finish");
+
+        Log.d("ssss",minPath[0]+","+minPath[1]+","+minPath[2]+","+minPath[3]+","+minPath[4]);
 
         ret.setPathLength(min);
         ret.setPathRoute(minPath);
@@ -47,6 +53,7 @@ public class CalcPath {
 
     public double preCalc(int num, int[] ver, double length)
     {
+
         int[] v=new int[MAX_NODE];
         double ret = length;
 
@@ -94,6 +101,7 @@ public class CalcPath {
     private double preCalcDfs(int num, int[] ver, double length)
     {
         //도착지가 정해졌는지 않됬는지
+        Log.d("ssss","in dfs");
         if (destination==-1 && num == nodeNum)//일단 도착지 없음
         {
             if (min > length)
@@ -108,7 +116,9 @@ public class CalcPath {
         }
         else if(destination==start && num==nodeNum)
         {
+
             length+=map[ver[num-1]][destination];
+            Log.d("ssss","end of dfs , length"+length);
 
             if (min > length)
             {
@@ -120,7 +130,7 @@ public class CalcPath {
             }
             return 1;
         }
-        else if(destination!=-1 && num==nodeNum-1)
+        else if(destination!=-1&& destination !=start && num==nodeNum-1)
         {
             length+=map[ver[num-1]][destination];
 
