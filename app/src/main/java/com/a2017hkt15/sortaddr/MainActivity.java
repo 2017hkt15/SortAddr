@@ -104,6 +104,8 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+
+
         TextView t = (TextView) findViewById(R.id.name);
         t.setText(Html.fromHtml("hello"));
         Button f = (Button) findViewById(R.id.follow);

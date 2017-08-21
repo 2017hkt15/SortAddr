@@ -13,6 +13,7 @@ import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -781,7 +783,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 childWidthSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
             } else {
                 childWidthSpec = MeasureSpec.makeMeasureSpec(lp.width, MeasureSpec.EXACTLY);
-
             }
 
             int childHeightSpec;
@@ -1373,31 +1374,32 @@ public class SlidingUpPanelLayout extends ViewGroup {
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             int target = 0;
+            Log.d("ssss","release , mslide : "+mSlideOffset+", mAnchor : "+mAnchorPoint);
 
             // direction is always positive if we are sliding in the expanded direction
             float direction = mIsSlidingUp ? -yvel : yvel;
 
             if (direction > 0 && mSlideOffset <= mAnchorPoint) {
                 // swipe up -> expand and stop at anchor point
-                target = computePanelTopPosition(mAnchorPoint);
+                target = computePanelTopPosition(mSlideOffset);
             } else if (direction > 0 && mSlideOffset > mAnchorPoint) {
                 // swipe up past anchor -> expand
-                target = computePanelTopPosition(1.0f);
+                target = computePanelTopPosition(mSlideOffset);
             } else if (direction < 0 && mSlideOffset >= mAnchorPoint) {
                 // swipe down -> collapse and stop at anchor point
-                target = computePanelTopPosition(mAnchorPoint);
+                target = computePanelTopPosition(mSlideOffset);
             } else if (direction < 0 && mSlideOffset < mAnchorPoint) {
                 // swipe down past anchor -> collapse
-                target = computePanelTopPosition(0.0f);
+                target = computePanelTopPosition(mSlideOffset);
             } else if (mSlideOffset >= (1.f + mAnchorPoint) / 2) {
                 // zero velocity, and far enough from anchor point => expand to the top
-                target = computePanelTopPosition(1.0f);
+                target = computePanelTopPosition(mSlideOffset);
             } else if (mSlideOffset >= mAnchorPoint / 2) {
                 // zero velocity, and close enough to anchor point => go to anchor
-                target = computePanelTopPosition(mAnchorPoint);
+                target = computePanelTopPosition(mSlideOffset);
             } else {
                 // settle at the bottom
-                target = computePanelTopPosition(0.0f);
+                target = computePanelTopPosition(mSlideOffset);
             }
 
             if (mDragHelper != null) {
