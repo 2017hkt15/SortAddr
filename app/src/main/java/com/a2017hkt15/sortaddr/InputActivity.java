@@ -11,6 +11,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,26 +32,26 @@ import com.skp.Tmap.TMapPOIItem;
 import com.skp.Tmap.TMapView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by gwmail on 2017-08-21.
  */
 
 public class InputActivity extends AppCompatActivity implements TMapGpsManager.onLocationChangedCallback {
+    private SlidingUpPanelLayout mLayout;
     private MarkerController markerController;
+    private CheckBox comeback;
     private PathBasic pathBasic;
     private int button_pos;
     private ListView listview;
     private ListViewAdapter adapter;
     private AddressInfo addressInfo = new AddressInfo(); //AddressInfo class
-    private ArrayList<AddressInfo> AddressInfo_array = new ArrayList<>();
-    private CheckBox comeback;
+    private ArrayList<AddressInfo> AddressInfo_array = new ArrayList<>(Collections.nCopies(10,new AddressInfo()));
     String address_lat_lon;
     float lat;
     float lon;
     static ProgressDialog progressDialog;
-    private SlidingUpPanelLayout mLayout;
-
 
     private TMapGpsManager tmapgps = null;
     private TMapView tmapview = null;
@@ -60,7 +61,10 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
 
+        Variable.numberOfLine=0;
+
         comeback=(CheckBox)findViewById(R.id.comeBack);
+
         //툴바 세팅
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_input);
         setSupportActionBar(toolbar);
@@ -144,16 +148,12 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         numberIcon[8] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark8);
         numberIcon[9] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark9);
 
-
         // 마커, 경로 관련 클래스
-        markerController = new MarkerController(tmapview, startIcon, passIcon, numberIcon, endIcon,poiIcon);
+        markerController = new MarkerController(tmapview, startIcon, passIcon, numberIcon, endIcon, poiIcon);
         pathBasic = new PathBasic(tmapview, markerController);
-
-
         mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
-        //검색 버튼 클릭
-        //경로 출력
+
     }
 
     @Override
@@ -183,6 +183,8 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         return super.onOptionsItemSelected(item);
     }
 
+    //검색 버튼 클릭
+    //경로 출력
     private void findButton() {
         if (AddressInfo_array.size() > 1) {    //출발지1개 목적지1개 일 때
             progressDialog = ProgressDialog.show(InputActivity.this, "경로 탐색 중", "잠시만 기다려주세요");
@@ -234,14 +236,13 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         if (resultCode == RESULT_OK) {
             final int position = intent.getIntExtra("position", 0);
             final String address_name = intent.getStringExtra("address_name");
-
-
-            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             addressInfo.setAddr(address_name);
             adapter.getItem(position).setAddrStr(address_name);
-
             //edittext에 setText
             adapter.notifyDataSetChanged();
+
+            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+
             //변경완료
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -275,10 +276,6 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         } else if (resultCode == RESULT_CANCELED) {
 
         }
-        else if (resultCode == RESULT_CANCELED) {
-                    Log.i("string","stri");
-        }
-
     }
 
     public int getButton_pos() {
