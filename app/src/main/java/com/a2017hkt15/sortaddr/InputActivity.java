@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -77,7 +78,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         tmapview.setSKPMapApiKey(Variable.mapApiKey);
         tmapview.setCompassMode(false);
         tmapview.setIconVisibility(true);
-        tmapview.setZoomLevel(12);
+        tmapview.setZoomLevel(8);
         tmapview.setMapType(TMapView.MAPTYPE_STANDARD);
         tmapview.setLanguage(TMapView.LANGUAGE_KOREAN);
 
@@ -161,43 +162,18 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         findButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AddressInfo_array.size() > 1) {    //출발지1개 목적지1개 일 때
-                    progressDialog = ProgressDialog.show(InputActivity.this, "경로 탐색 중", "잠시만 기다려주세요");
 
-                    Handler mHandler = new Handler();
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            pathBasic.calcDistancePath(markerController.getMarkerList());
-                        }
-                    }, 1000);
-                } else if (AddressInfo_array.size() == 0) {   //출발지 입력을 안 했을때
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(InputActivity.this);
-                    alertDialog.setTitle("알림")
-                            .setMessage("출발지를 입력해주세요")
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
-                    AlertDialog dialog = alertDialog.create();
-                    dialog.show();
-                } else if (AddressInfo_array.size() == 1) {   //목적지 입력을 안했을때
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(InputActivity.this);
-                    alertDialog.setTitle("알림")
-                            .setMessage("목적지를 입력해주세요")
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
-                    AlertDialog dialog = alertDialog.create();
-                    dialog.show();
-                }
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_input, menu);
+
+        return true;
+    }
+
     @Override
     public void onLocationChange(Location location) {
         tmapview.setLocationPoint(location.getLongitude(), location.getLatitude());
@@ -206,6 +182,9 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_bt1:
+                findButton();
+                break;
             case android.R.id.home:
                 Variable.numberOfLine = 0;
                 finish();
@@ -213,6 +192,43 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void findButton() {
+        if (AddressInfo_array.size() > 1) {    //출발지1개 목적지1개 일 때
+            progressDialog = ProgressDialog.show(InputActivity.this, "경로 탐색 중", "잠시만 기다려주세요");
+
+            Handler mHandler = new Handler();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    pathBasic.calcDistancePath(markerController.getMarkerList());
+                }
+            }, 1000);
+        } else if (AddressInfo_array.size() == 0) {   //출발지 입력을 안 했을때
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(InputActivity.this);
+            alertDialog.setTitle("알림")
+                    .setMessage("출발지를 입력해주세요")
+                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+            AlertDialog dialog = alertDialog.create();
+            dialog.show();
+        } else if (AddressInfo_array.size() == 1) {   //목적지 입력을 안했을때
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(InputActivity.this);
+            alertDialog.setTitle("알림")
+                    .setMessage("목적지를 입력해주세요")
+                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+            AlertDialog dialog = alertDialog.create();
+            dialog.show();
+        }
     }
 
     private void addLine() {

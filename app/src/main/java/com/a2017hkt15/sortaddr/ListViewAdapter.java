@@ -112,7 +112,7 @@ public class ListViewAdapter extends BaseAdapter {
         });
 
         // 아이템 내 각 위젯에 데이터 반영
-        imageButtonDelete.setImageDrawable(listViewWay.getDeleteImage());
+//        imageButtonDelete.setImageDrawable(listViewWay.getDeleteImage());
         titleTextView.setText(listViewWay.getTitleStr());
         wayEditText.setText(listViewWay.getAddrStr());
 
