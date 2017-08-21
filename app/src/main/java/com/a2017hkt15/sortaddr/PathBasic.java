@@ -71,10 +71,13 @@ public class PathBasic {
         this.setPathRoute(pathInfo.getPathRoute());
 
         ArrayList<TMapMarkerItem> markerList = markerController.getMarkerList();
+        double distanceSum = 0;
         for(int cur = 0; cur < markerList.size() - 1; cur++) {
-            if ( markerController.getEndIndex() <= 0) {
+            distanceSum += distanceArr[pathRoute[cur]][pathRoute[cur+1]] / 1000d;
+
+            if (pathRoute[cur + 1] != markerController.getEndIndex())
                 markerController.setMarkerNumber(pathRoute[cur + 1], cur + 1);
-            }
+            markerController.getMarkerList().get(pathRoute[cur+1]).setCalloutTitle(markerController.getMarkerList().get(pathRoute[cur+1]).getCalloutTitle() + " (" + Math.round(distanceSum) + "km)");
 
             TMapPolyLine polyLine = distanceCalcThread.getPathLine()[pathRoute[cur]][pathRoute[cur + 1]];
             polyLine.setLineColor(Color.BLUE);
@@ -82,30 +85,16 @@ public class PathBasic {
             tmapView.addTMapPolyLine(pathID + "Route", polyLine);
             pathID++;
 
-            /*
-            tmapdata.findPathData(markerList.get(pathRoute[cur]).getTMapPoint(), markerList.get(pathRoute[cur+1]).getTMapPoint(), new TMapData.FindPathDataListenerCallback() {
-                @Override
-                public void onFindPathData(TMapPolyLine polyLine) {
-                    polyLine.setLineColor(Color.BLUE);
-                    polyLine.setLineWidth(5);
-                    tmapView.addTMapPolyLine(pathID + "Route", polyLine);
-                    pathID++;
+            if ( markerController.getEndIndex() == 0 && cur == markerList.size() - 2) {
+                markerController.getMarkerList().get(pathRoute[cur+1]).setCalloutTitle(markerController.getMarkerList().get(pathRoute[0]).getCalloutTitle() + " (" + Math.round(distanceSum) + "km)");
+                polyLine = (distanceCalcThread.getPathLine())[pathRoute[markerList.size() - 1]][0];
+                polyLine.setLineColor(Color.BLUE);
+                polyLine.setLineWidth(5);
+                tmapView.addTMapPolyLine(pathID + "Route", polyLine);
+                pathID++;
+            }
+        }
 
-                    if (InputActivity.progressDialog != null) {
-                        InputActivity.progressDialog.dismiss();
-                        InputActivity.progressDialog = null;
-                    }
-                }
-            });
-            */
-        }
-        if (markerController.getEndIndex() == 0) {
-            TMapPolyLine polyLine = (distanceCalcThread.getPathLine())[pathRoute[markerList.size() - 1]][0];
-            polyLine.setLineColor(Color.BLUE);
-            polyLine.setLineWidth(5);
-            tmapView.addTMapPolyLine(pathID + "Route", polyLine);
-            pathID++;
-        }
 
         if (InputActivity.progressDialog != null) {
             InputActivity.progressDialog.dismiss();
