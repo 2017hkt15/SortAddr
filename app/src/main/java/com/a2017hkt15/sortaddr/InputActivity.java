@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,6 +47,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
     String address_lat_lon;
     float lat;
     float lon;
+
     static ProgressDialog progressDialog;
     private SlidingUpPanelLayout mLayout;
 
@@ -233,14 +235,16 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
     //position, address_name
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (resultCode == RESULT_OK) {
+
+
             final int position = intent.getIntExtra("position", 0);
             final String address_name = intent.getStringExtra("address_name");
 
 
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             addressInfo.setAddr(address_name);
-            adapter.getItem(position).setAddrStr(address_name);
-
+            Log.d("dd","nodeNum : "+Variable.nodeNum);
+            adapter.getItem(Variable.nodeNum).setAddrStr(address_name);
             //edittext에 setText
             adapter.notifyDataSetChanged();
             //변경완료
@@ -266,13 +270,16 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                 @Override
                 public void run() {
                     address_lat_lon = address_name + "," + String.valueOf(addressInfo.getLat()) + "," + String.valueOf(addressInfo.getLon());
-                    AddressInfo_array.add(position, addressInfo);
-                    if (position == 0) {
-                        markerController.setStartMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(0).getAddr());
+                    AddressInfo_array.add(Variable.nodeNum, addressInfo);
+                    if (Variable.nodeNum == 0) {
+                        markerController.setStartMarker(AddressInfo_array.get(Variable.nodeNum).getLat(), AddressInfo_array.get(Variable.nodeNum).getLon(), AddressInfo_array.get(0).getAddr());
                     } else
-                        markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr());
+                        markerController.addMarker(AddressInfo_array.get(Variable.nodeNum).getLat(), AddressInfo_array.get(Variable.nodeNum).getLon(), AddressInfo_array.get(Variable.nodeNum).getAddr());
+
+                    Variable.nodeNum++;
                 }
             }, 1000);
+
         } else if (resultCode == RESULT_CANCELED) {
 
         }

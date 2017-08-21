@@ -71,6 +71,7 @@ public class ListViewAdapter extends BaseAdapter {
                     inputActivity.getAddressInfo_array().remove(pos);
                     //해당 장소의 마커 삭제
                     inputActivity.getMarkerController().removeMarker(pos);
+                    Variable.nodeNum--;
                     // listViewWayList.remove(pos);
                     // Variable.numberOfLine--;
                     // notifyDataSetChanged();    삭제해도 되는 듯
