@@ -23,9 +23,9 @@
         <activity android:name=".InputActivity" />
         <activity
             android:name=".AutoCompleteActivity"
-            android:windowSoftInputMode="adjustNothing"></activity>
-        <activity android:name=".Test" />
-        <activity android:name=".FullAddressActivty"></activity>
+            android:windowSoftInputMode="adjustPan|stateVisible"></activity>
+        <activity android:name=".FullAddressActivty"
+            android:windowSoftInputMode="adjustPan|stateVisible"></activity>
     </application>
 
 </manifest>

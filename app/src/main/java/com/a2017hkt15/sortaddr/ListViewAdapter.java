@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.test.ActivityUnitTestCase;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,16 +99,18 @@ public class ListViewAdapter extends BaseAdapter {
                 dialog.setSingleChoiceItems(selection, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(context,selection[which],Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context,selection[which],Toast.LENGTH_SHORT).show();
                         if(which==0) {
                             Intent intent = new Intent(context, AutoCompleteActivity.class);
-
                             intent.putExtra("position", pos);
                             inputActivity.startActivityForResult(intent, 1);
                             dialog.cancel();
                         }
                         else {
-
+                            Intent intent = new Intent(context, FullAddressActivty.class);
+                            intent.putExtra("position",pos);
+                            inputActivity.startActivityForResult(intent,1);
+                            dialog.cancel();
                         }
                     }
                 });
