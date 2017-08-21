@@ -82,7 +82,7 @@ public class CalcPath {
     private double preCalcDfs(int num, int[] ver, double length)
     {
         //도착지가 정해졌는지 않됬는지
-        if (num == nodeNum)//일단 도착지 없음
+        if (destination==-1 && num == nodeNum)//일단 도착지 없음
         {
             if (min > length)
             {
@@ -94,6 +94,36 @@ public class CalcPath {
             }
             return 1;
         }
+        else if(destination==start && num==nodeNum)
+        {
+            length+=map[ver[num-1]][destination];
+
+            if (min > length)
+            {
+                min = length;
+                for (int i = 0; i < nodeNum; i++)
+                {
+                    minPath[i]=ver[i];
+                }
+            }
+            return 1;
+        }
+        else if(destination!=-1 && num==nodeNum-1)
+        {
+            length+=map[ver[num-1]][destination];
+
+            if (min > length)
+            {
+                min = length;
+                for (int i = 0; i < nodeNum-1; i++)
+                {
+                    minPath[i]=ver[i];
+                }
+                minPath[nodeNum-1]=destination;
+            }
+            return 1;
+        }
+
 
         if (preCalc(num,ver,length) >= min)
         {
@@ -106,7 +136,7 @@ public class CalcPath {
             boolean flag = true;
             for (int j = 0; j < num; j++)
             {
-                if (i == ver[j])
+                if (i == ver[j] || i==destination)
                 {
                     flag = false;
                     break;
