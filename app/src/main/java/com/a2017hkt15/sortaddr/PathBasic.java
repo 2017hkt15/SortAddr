@@ -72,8 +72,9 @@ public class PathBasic {
 
         ArrayList<TMapMarkerItem> markerList = markerController.getMarkerList();
         for(int cur = 0; cur < markerList.size() - 1; cur++) {
-            if ( markerController.getEndIndex() <= 0)
+            if ( markerController.getEndIndex() <= 0) {
                 markerController.setMarkerNumber(pathRoute[cur + 1], cur + 1);
+            }
 
             TMapPolyLine polyLine = distanceCalcThread.getPathLine()[pathRoute[cur]][pathRoute[cur + 1]];
             polyLine.setLineColor(Color.BLUE);

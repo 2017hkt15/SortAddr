@@ -122,6 +122,7 @@ public class MarkerController {
         if (index == 0) {
             this.endIndex = index;
             this.isEndExist = true;
+            return;
         }
         else {
             this.endIndex = index;
