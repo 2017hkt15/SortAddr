@@ -31,9 +31,10 @@ public class MarkerController {
     private Bitmap startMarkerIcon;
     private Bitmap passMarkerIcon;
     private Bitmap endMarkerIcon;
+    private Bitmap poiIcon;
     private Bitmap[] numberMarkerIcon;
 
-    public MarkerController (TMapView tmapView, Bitmap startMarkerIcon, Bitmap passMarkerIcon, Bitmap[] markerNumberIcon, Bitmap endMarkerIcon) {
+    public MarkerController (TMapView tmapView, Bitmap startMarkerIcon, Bitmap passMarkerIcon, Bitmap[] markerNumberIcon, Bitmap endMarkerIcon, Bitmap poiIcon) {
         this.tmapView = tmapView;
         this.isStartExist = false;
         this.isEndExist = false;
@@ -41,12 +42,13 @@ public class MarkerController {
         this.passMarkerIcon = passMarkerIcon;
         this.numberMarkerIcon = markerNumberIcon;
         this.endMarkerIcon = endMarkerIcon;
+        this.poiIcon = poiIcon;
         this.markerList = new ArrayList<TMapMarkerItem>();
     }
 
     // 위도, 경도, 마커(장소) 이름
     public void addMarker(float latitude, float longitude, String placeName) {
-        //일반 마커
+        // 일반 마커
         // 포인트 지점 인스턴스 생성 후 마커 인스턴스 생성
         TMapPoint placePoint = new TMapPoint(latitude, longitude);
         TMapMarkerItem placeMarker = new TMapMarkerItem();
@@ -62,6 +64,7 @@ public class MarkerController {
         placeMarker.setAutoCalloutVisible(true);
         placeMarker.setCalloutTitle(placeName);
         placeMarker.setCalloutLeftImage(passMarkerIcon);
+        placeMarker.setCalloutRightButtonImage(poiIcon);
 
         // 배열리스트 및 지도에 마커 추가
         tmapView.addMarkerItem(placeMarker.getID(), placeMarker);
@@ -86,6 +89,7 @@ public class MarkerController {
         placeMarker.setAutoCalloutVisible(true);
         placeMarker.setCalloutTitle(placeName);
         placeMarker.setCalloutLeftImage(startMarkerIcon);
+        placeMarker.setCalloutRightButtonImage(poiIcon);
 
         // 배열리스트 및 지도에 마커 추가
         tmapView.addMarkerItem(placeMarker.getID(), placeMarker);

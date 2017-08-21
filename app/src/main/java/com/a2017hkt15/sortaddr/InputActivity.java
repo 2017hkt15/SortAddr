@@ -8,12 +8,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapGpsManager;
+import com.skp.Tmap.TMapMarkerItem;
 import com.skp.Tmap.TMapPOIItem;
 import com.skp.Tmap.TMapView;
 
@@ -74,9 +77,20 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         tmapview.setSKPMapApiKey(Variable.mapApiKey);
         tmapview.setCompassMode(false);
         tmapview.setIconVisibility(true);
-        tmapview.setZoomLevel(8);
+        tmapview.setZoomLevel(12);
         tmapview.setMapType(TMapView.MAPTYPE_STANDARD);
         tmapview.setLanguage(TMapView.LANGUAGE_KOREAN);
+
+        tmapview.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
+            @Override
+            public void onCalloutRightButton(TMapMarkerItem markerItem) {
+                String search = markerItem.getName();
+                String uri="https://www.google.co.kr/search?q="+search;
+                Intent i=new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(uri));
+                startActivity(i);
+            }
+        });
 
         tmapgps = new TMapGpsManager(InputActivity.this);
         tmapgps.setMinTime(1000);
@@ -124,6 +138,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         Bitmap startIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.start);
         Bitmap passIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.pass);
         Bitmap endIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.end);
+        Bitmap poiIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.search);
 
         Bitmap[] numberIcon = new Bitmap[10];
         numberIcon[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark1);
@@ -137,7 +152,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         numberIcon[9] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark9);
 
         // 마커, 경로 관련 클래스
-        markerController = new MarkerController(tmapview, startIcon, passIcon, numberIcon, endIcon);
+        markerController = new MarkerController(tmapview, startIcon, passIcon, numberIcon, endIcon, poiIcon);
         pathBasic = new PathBasic(tmapview, markerController);
         Button findButton = (Button) findViewById(R.id.button_find);
 
