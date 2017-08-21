@@ -735,6 +735,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
         final int childCount = getChildCount();
 
         if (childCount != 2) {
+            Log.v("CHILDCOUNT", ""+childCount);
             throw new IllegalStateException("Sliding up panel layout must have exactly 2 children!");
         }
 
