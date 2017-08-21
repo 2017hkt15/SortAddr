@@ -72,7 +72,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         LinearLayout layoutForMap = (LinearLayout) findViewById(R.id.layout_for_map);
         tmapview = new TMapView(this);
         tmapview.setSKPMapApiKey(Variable.mapApiKey);
-        tmapview.setCompassMode(true);
+        tmapview.setCompassMode(false);
         tmapview.setIconVisibility(true);
         tmapview.setZoomLevel(8);
         tmapview.setMapType(TMapView.MAPTYPE_STANDARD);
