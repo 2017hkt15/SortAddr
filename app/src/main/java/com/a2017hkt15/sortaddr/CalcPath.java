@@ -75,6 +75,18 @@ public class CalcPath {
                 ret += m;
             }
         }
+        if(destination==start)
+        {
+            double m=987654321.0;
+            for(int i=0;i<num;i++)
+            {
+                if(map[start][i]<m)
+                {
+                    m=map[start][i];
+                }
+            }
+            ret+=m;
+        }
 
         return ret;
     }
