@@ -1,5 +1,6 @@
 package com.a2017hkt15.sortaddr;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -7,16 +8,18 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.skp.Tmap.TMapGpsManager;
 import com.skp.Tmap.TMapView;
+
+import java.util.ArrayList;
 
 /**
  * Created by gwmail on 2017-08-21.
  */
 
 public class InputActivity extends AppCompatActivity implements TMapGpsManager.onLocationChangedCallback {
-
     private TMapGpsManager tmapgps = null;
     private TMapView tmapview = null;
 
