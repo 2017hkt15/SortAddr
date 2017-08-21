@@ -20,12 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InputActivity"></activity>
-        <activity android:name=".AutoCompleteActivity"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
-        <activity android:name=".Test"></activity>
-
+        <activity android:name=".InputActivity" />
+        <activity
+            android:name=".AutoCompleteActivity"
+            android:windowSoftInputMode="adjustPan|stateVisible"></activity>
+        <activity android:name=".FullAddressActivty"
+            android:windowSoftInputMode="adjustPan|stateVisible"></activity>
     </application>
 
 </manifest>

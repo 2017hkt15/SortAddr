@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.mylibrary.SlidingUpPanelLayout;
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapGpsManager;
 import com.skp.Tmap.TMapMarkerItem;
@@ -49,6 +50,8 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
     float lat;
     float lon;
     static ProgressDialog progressDialog;
+    private SlidingUpPanelLayout mLayout;
+
 
     private TMapGpsManager tmapgps = null;
     private TMapView tmapview = null;
@@ -157,6 +160,8 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         pathBasic = new PathBasic(tmapview, markerController);
         Button findButton = (Button) findViewById(R.id.button_find);
 
+        mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+
         //검색 버튼 클릭
         //경로 출력
         findButton.setOnClickListener(new View.OnClickListener() {
@@ -245,8 +250,12 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         if (resultCode == RESULT_OK) {
             final int position = intent.getIntExtra("position", 0);
             final String address_name = intent.getStringExtra("address_name");
+
+
+            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             addressInfo.setAddr(address_name);
             adapter.getItem(position).setAddrStr(address_name);
+
             //edittext에 setText
             adapter.notifyDataSetChanged();
             //변경완료
