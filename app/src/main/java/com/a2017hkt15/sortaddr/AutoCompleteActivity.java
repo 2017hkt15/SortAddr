@@ -38,7 +38,7 @@ public class AutoCompleteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         toolbar.setTitle(R.string.app_name);
-        String subtitle = "목적지 입력: 검색 후 입력 클릭";
+        String subtitle = "목적지 입력: 검색 후 목적지 클릭";
         toolbar.setSubtitle(subtitle);
 
         toolbar.setTitleTextColor(Color.WHITE);
