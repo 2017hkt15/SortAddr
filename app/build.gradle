@@ -29,4 +29,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(path: ':mylibrary')
     compile files('lib/com.skp.Tmap_1.0.47.jar')
+    compile project(':mylibrary')
 }
