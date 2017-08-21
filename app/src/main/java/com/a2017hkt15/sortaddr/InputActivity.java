@@ -1,6 +1,9 @@
 package com.a2017hkt15.sortaddr;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -64,6 +67,28 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         tmapview.setTrafficInfo(true);
 
         layoutForMap.addView(tmapview);
+
+
+        // 현재 위치 마커 아이콘 리소스 불러온 후 적용
+        Context context = getApplicationContext();
+        Bitmap startIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.start);
+        Bitmap passIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.pass);
+        Bitmap endIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.end);
+
+        Bitmap[] numberIcon = new Bitmap[10];
+        numberIcon[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark1);
+        numberIcon[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark2);
+        numberIcon[3] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark3);
+        numberIcon[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark4);
+        numberIcon[5] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark5);
+        numberIcon[6] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark6);
+        numberIcon[7] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark7);
+        numberIcon[8] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark8);
+        numberIcon[9] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark9);
+
+        // 마커, 경로 관련 클래스
+        MarkerController markerController = new MarkerController(tmapview, startIcon, passIcon, numberIcon, endIcon);
+        PathBasic pathBasic = new PathBasic(tmapview, markerController);
     }
     @Override
     public void onLocationChange(Location location) {
