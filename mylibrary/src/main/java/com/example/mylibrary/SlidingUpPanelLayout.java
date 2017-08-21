@@ -13,6 +13,7 @@ import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -733,6 +734,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
         final int childCount = getChildCount();
 
         if (childCount != 2) {
+            Log.v("CHILDCOUNT", ""+childCount);
             throw new IllegalStateException("Sliding up panel layout must have exactly 2 children!");
         }
 
