@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -110,11 +111,7 @@ public class FullAddressActivty extends AppCompatActivity {
         tMapdata.findAddressPOI(fulladdress, 300, new TMapData.FindAddressPOIListenerCallback() {
             @Override
             public void onFindAddressPOI(ArrayList<TMapPOIItem> poiItem) {
-                if(poiItem.size()==0)
-                {
-                    addressList.clear();
-                    addressList.add("검색결과가 없습니다");
-                }
+
                 for (int i = 0; i < poiItem.size(); i++) {
                     TMapPOIItem item = poiItem.get(i);
                     addressList.add(item.getPOIAddress().replace("null", ""));

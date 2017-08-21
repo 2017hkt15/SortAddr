@@ -92,6 +92,11 @@ public class AutoCompleteActivity extends AppCompatActivity {
                 tMapdata.autoComplete(address, new TMapData.AutoCompleteListenerCallback() {
                     @Override
                     public void onAutoComplete(ArrayList<String> poiltem) {
+                        if(poiltem.size()==0) {
+                            addressList.clear();
+                            addressList.add("검색 결과가 없습니다.");
+                        }
+
                         for (int i = 0; i < poiltem.size(); i++) {
                             addressList.add(poiltem.get(i));
                         }
