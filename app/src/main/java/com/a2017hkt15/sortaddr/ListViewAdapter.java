@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,8 @@ public class ListViewAdapter extends BaseAdapter {
     private InputActivity inputActivity;
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewWay> listViewWayList = new ArrayList<>();
+
+    private RadioButton radioButton;
 
     // ListViewAdapter의 생성자
     public ListViewAdapter(InputActivity inputActivity) {
@@ -55,6 +58,9 @@ public class ListViewAdapter extends BaseAdapter {
         ImageButton imageButtonDelete = (ImageButton) convertView.findViewById(R.id.imageButtonDelete);
         TextView titleTextView = (TextView) convertView.findViewById(R.id.textViewTitle);
         EditText wayEditText = (EditText) convertView.findViewById(R.id.editTextWay);
+        radioButton = (RadioButton) convertView.findViewById(R.id.LastDestinationRadioButton);
+
+
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewWay listViewWay = listViewWayList.get(position);

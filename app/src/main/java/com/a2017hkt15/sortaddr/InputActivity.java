@@ -140,16 +140,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         // 마커, 경로 관련 클래스
         markerController = new MarkerController(tmapview, startIcon, passIcon, numberIcon, endIcon);
         pathBasic = new PathBasic(tmapview, markerController);
-        Button findButton = (Button) findViewById(R.id.button_find);
 
-        //검색 버튼 클릭
-        //경로 출력
-        findButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override
@@ -179,6 +170,8 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         return super.onOptionsItemSelected(item);
     }
 
+    //검색 버튼 클릭
+    //경로 출력
     private void findButton() {
         if (AddressInfo_array.size() > 1) {    //출발지1개 목적지1개 일 때
             progressDialog = ProgressDialog.show(InputActivity.this, "경로 탐색 중", "잠시만 기다려주세요");

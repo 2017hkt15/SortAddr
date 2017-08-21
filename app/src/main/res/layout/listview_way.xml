@@ -15,11 +15,12 @@
 
     <EditText
         android:id="@+id/editTextWay"
-        android:layout_width="164dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:ems="7"
         android:inputType="none"
-        android:focusable="false" />
+        android:focusable="false"
+        android:hint="주소를 입력하세요."/>
 
     <ImageButton
         android:id="@+id/imageButtonDelete"
@@ -29,5 +30,10 @@
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         app:srcCompat="@drawable/delete_64" />
+
+    <RadioButton
+        android:id="@+id/LastDestinationRadioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
