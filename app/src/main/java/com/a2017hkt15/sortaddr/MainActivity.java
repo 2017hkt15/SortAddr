@@ -40,11 +40,13 @@ public class MainActivity extends ActionBarActivity {
 
         ListView lv = (ListView) findViewById(R.id.list);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(MainActivity.this, "onItemClick", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         List<String> your_array_list = Arrays.asList(
                 "This",
