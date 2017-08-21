@@ -1,5 +1,9 @@
 package com.a2017hkt15.sortaddr;
 
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +18,10 @@ import android.widget.ListView;
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapPOIItem;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class FullAddressActivty extends AppCompatActivity {
     String address_text;
@@ -28,6 +34,10 @@ public class FullAddressActivty extends AppCompatActivity {
     String final_fulladdress;
     EditText edit_law;
     EditText edit_ex;
+    int position;
+    Location loc = new Location("");
+    Geocoder geocoder = new Geocoder(FullAddressActivty.this);
+    List<Address> addr = null;
     private ArrayList<String> address_list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,5 +110,34 @@ public class FullAddressActivty extends AppCompatActivity {
 
         final_fulladdress = fulladdress+edit_ex.getText().toString();
         Log.i("final",final_fulladdress);
+        //intent가 pos을 보냄
+
+
+        Intent intent = getIntent();
+        position = intent.getIntExtra("position",0);
+        Intent intent1 = new Intent(FullAddressActivty.this,InputActivity.class);
+        runOnUiThread(new Runnable() {
+            public void run() {
+                try {
+                    addr = geocoder.getFromLocationName(fulladdress, 5);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (addr != null) {
+                    if (addr.size() == 0)
+                        Log.i("error", "addr.size222 == 0");
+                    for (int i = 0; i < addr.size(); i++) {
+                        Address lating = addr.get(i);
+                        double lat = lating.getLatitude(); // 위도가져오기
+                        double lon = lating.getLongitude(); // 경도가져오기
+                        loc.setLatitude(lat);
+                        loc.setLongitude(lon);
+                        Log.i("check20", String.valueOf(loc.getLatitude()));
+                        Log.i("check10", String.valueOf(loc.getLongitude()));
+                    }
+                }
+            }
+        });
+
     }
 }
