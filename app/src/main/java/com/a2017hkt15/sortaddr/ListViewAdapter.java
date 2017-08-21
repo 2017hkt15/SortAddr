@@ -103,13 +103,14 @@ public class ListViewAdapter extends BaseAdapter {
                         if(which==0) {
                             Intent intent = new Intent(context, AutoCompleteActivity.class);
                             intent.putExtra("position", pos);
-                            inputActivity.startActivityForResult(intent, 1);
+                            inputActivity.startActivityForResult(intent, 10);
                             dialog.cancel();
                         }
                         else {
-                            Intent intent = new Intent(context, FullAddressActivty.class);
-                            intent.putExtra("position",pos);
-                            inputActivity.startActivityForResult(intent,1);
+                            Intent intent1 = new Intent(context, FullAddressActivty.class);
+                            intent1.putExtra("position",pos);
+                            //inputActivity.startActivity(intent);
+                            inputActivity.startActivityForResult(intent1,2);
                             dialog.cancel();
                         }
                     }

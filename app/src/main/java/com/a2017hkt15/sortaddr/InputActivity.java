@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -232,15 +233,12 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
     //AutoComplete으로부터 데이터를 받음
     //position, address_name
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (resultCode == RESULT_OK) {
+        if (requestCode == 10) {
             final int position = intent.getIntExtra("position", 0);
             final String address_name = intent.getStringExtra("address_name");
-
-
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             addressInfo.setAddr(address_name);
             adapter.getItem(position).setAddrStr(address_name);
-
             //edittext에 setText
             adapter.notifyDataSetChanged();
             //변경완료
@@ -273,9 +271,37 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                         markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr());
                 }
             }, 1000);
-        } else if (resultCode == RESULT_CANCELED) {
-
         }
+        if(requestCode==2){
+            final int position = intent.getIntExtra("position", 0);
+            final String address_name = intent.getStringExtra("fulladdress");
+            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            addressInfo.setAddr(address_name);
+            adapter.getItem(position).setAddrStr(address_name);
+            //edittext에 setText
+            adapter.notifyDataSetChanged();
+            //변경완료
+            final float lat = intent.getFloatExtra("lati_full",0);
+            final float lon = intent.getFloatExtra("lon_full",0);
+            addressInfo.setAddr(address_name);
+            addressInfo.setLat(lat);
+            addressInfo.setLon(lon);
+            Handler mHandler = new Handler();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    AddressInfo_array.add(position, addressInfo);
+                    if (position == 0) {
+                        markerController.setStartMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(0).getAddr());
+                    } else
+                        markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr());
+                }
+            }, 1000);
+        }
+        else if (resultCode == RESULT_CANCELED) {
+                    Log.i("string","stri");
+        }
+
     }
 
     public int getButton_pos() {
