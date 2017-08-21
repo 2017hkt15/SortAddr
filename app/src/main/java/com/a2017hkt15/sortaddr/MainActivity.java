@@ -1,133 +1,76 @@
 package com.a2017hkt15.sortaddr;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
+public class MainActivity extends AppCompatActivity {
 
-import com.example.mylibrary.SlidingUpPanelLayout;
-import com.example.mylibrary.SlidingUpPanelLayout.PanelSlideListener;
-import com.example.mylibrary.SlidingUpPanelLayout.PanelState;
-
-import java.util.Arrays;
-import java.util.List;
-
-public class MainActivity extends ActionBarActivity {
-    private static final String TAG = "DemoActivity";
-
-    private SlidingUpPanelLayout mLayout;
+    public static final int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-
-
-        ListView lv = (ListView) findViewById(R.id.list);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "onItemClick", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        List<String> your_array_list = Arrays.asList(
-                "This",
-                "Is",
-                "An",
-                "Example",
-                "ListView",
-                "That",
-                "You",
-                "Can",
-                "Scroll",
-                ".",
-                "It",
-                "Shows",
-                "How",
-                "Any",
-                "Scrollable",
-                "View",
-                "Can",
-                "Be",
-                "Included",
-                "As",
-                "A",
-                "Child",
-                "Of",
-                "SlidingUpPanelLayout"
-        );
-
-        // This is the array adapter, it takes the context of the activity as a
-        // first parameter, the type of list view as a second parameter and your
-        // array as a third parameter.
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                your_array_list );
-
-        lv.setAdapter(arrayAdapter);
-
-        mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-        mLayout.addPanelSlideListener(new PanelSlideListener() {
-            @Override
-            public void onPanelSlide(View panel, float slideOffset) {
-                Log.i(TAG, "onPanelSlide, offset " + slideOffset);
-            }
-
-            @Override
-            public void onPanelStateChanged(View panel, PanelState previousState, PanelState newState) {
-                Log.i(TAG, "onPanelStateChanged " + newState);
-            }
-        });
-        mLayout.setFadeOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mLayout.setPanelState(PanelState.COLLAPSED);
-            }
-        });
-
-        TextView t = (TextView) findViewById(R.id.name);
-        t.setText(Html.fromHtml("hello"));
-        Button f = (Button) findViewById(R.id.follow);
-        f.setText(Html.fromHtml("follow"));
-        f.setMovementMethod(LinkMovementMethod.getInstance());
-        f.setOnClickListener(new OnClickListener() {
+        Button goInputButton = (Button)findViewById(R.id.Button_input);
+        goInputButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse("http://www.twitter.com/umanoapp"));
-                startActivity(i);
+                //Runtime Permission 관련
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                            || ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(MainActivity.this,
+                                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                                MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+                    }
+                    else {
+                        goToNextActivity();
+                    }
+                }
+                else {
+                    //Input Activity 실행
+                    goToNextActivity();
+                }
             }
         });
     }
 
-
-
     @Override
-    public void onBackPressed() {
-        if (mLayout != null &&
-                (mLayout.getPanelState() == PanelState.EXPANDED || mLayout.getPanelState() == PanelState.ANCHORED)) {
-            mLayout.setPanelState(PanelState.COLLAPSED);
-        } else {
-            super.onBackPressed();
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION:
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    goToNextActivity();
+                } else {
+                    new AlertDialog.Builder(this).setTitle("경고")
+                            .setMessage("권한이 없으면 이용할 수 없습니다.")
+                            .setNeutralButton("닫기",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            finish();
+                                        }
+                                    }).show();
+                }
         }
+    }
+
+    private void goToNextActivity() {
+        Intent intent = new Intent(MainActivity.this, InputActivity.class);
+        startActivity(intent);
     }
 }
