@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import com.example.mylibrary.SlidingUpPanelLayout;
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapGpsManager;
+import com.skp.Tmap.TMapMarkerItem;
 import com.skp.Tmap.TMapPOIItem;
 import com.skp.Tmap.TMapView;
 
@@ -47,6 +49,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
     String address_lat_lon;
     float lat;
     float lon;
+
     static ProgressDialog progressDialog;
     private SlidingUpPanelLayout mLayout;
 
@@ -82,6 +85,17 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         tmapview.setZoomLevel(8);
         tmapview.setMapType(TMapView.MAPTYPE_STANDARD);
         tmapview.setLanguage(TMapView.LANGUAGE_KOREAN);
+
+        tmapview.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
+            @Override
+            public void onCalloutRightButton(TMapMarkerItem markerItem) {
+                String search = markerItem.getName();
+                String uri="https://www.google.co.kr/search?q="+search;
+                Intent i=new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(uri));
+                startActivity(i);
+            }
+        });
 
         tmapgps = new TMapGpsManager(InputActivity.this);
         tmapgps.setMinTime(1000);
@@ -129,6 +143,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         Bitmap startIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.start);
         Bitmap passIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.pass);
         Bitmap endIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.end);
+        Bitmap poiIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.search);
 
         Bitmap[] numberIcon = new Bitmap[10];
         numberIcon[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark1);
@@ -142,20 +157,9 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         numberIcon[9] = BitmapFactory.decodeResource(context.getResources(), R.drawable.mark9);
 
         // 마커, 경로 관련 클래스
-        markerController = new MarkerController(tmapview, startIcon, passIcon, numberIcon, endIcon);
+        markerController = new MarkerController(tmapview, startIcon, passIcon, numberIcon, endIcon, poiIcon);
         pathBasic = new PathBasic(tmapview, markerController);
-        Button findButton = (Button) findViewById(R.id.button_find);
-
         mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-
-        //검색 버튼 클릭
-        //경로 출력
-        findButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override
@@ -185,6 +189,8 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         return super.onOptionsItemSelected(item);
     }
 
+    //검색 버튼 클릭
+    //경로 출력
     private void findButton() {
         if (AddressInfo_array.size() > 1) {    //출발지1개 목적지1개 일 때
             progressDialog = ProgressDialog.show(InputActivity.this, "경로 탐색 중", "잠시만 기다려주세요");
@@ -239,6 +245,8 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             addressInfo.setAddr(address_name);
             adapter.getItem(position).setAddrStr(address_name);
+            Log.d("dd","nodeNum : "+Variable.nodeNum);
+            adapter.getItem(Variable.nodeNum).setAddrStr(address_name);
             //edittext에 setText
             adapter.notifyDataSetChanged();
             //변경완료
@@ -264,11 +272,13 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                 @Override
                 public void run() {
                     address_lat_lon = address_name + "," + String.valueOf(addressInfo.getLat()) + "," + String.valueOf(addressInfo.getLon());
-                    AddressInfo_array.add(position, addressInfo);
-                    if (position == 0) {
-                        markerController.setStartMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(0).getAddr());
+                    AddressInfo_array.add(Variable.nodeNum, addressInfo);
+                    if (Variable.nodeNum == 0) {
+                        markerController.setStartMarker(AddressInfo_array.get(Variable.nodeNum).getLat(), AddressInfo_array.get(Variable.nodeNum).getLon(), AddressInfo_array.get(0).getAddr());
                     } else
-                        markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr());
+                        markerController.addMarker(AddressInfo_array.get(Variable.nodeNum).getLat(), AddressInfo_array.get(Variable.nodeNum).getLon(), AddressInfo_array.get(Variable.nodeNum).getAddr());
+
+                    Variable.nodeNum++;
                 }
             }, 1000);
         }
