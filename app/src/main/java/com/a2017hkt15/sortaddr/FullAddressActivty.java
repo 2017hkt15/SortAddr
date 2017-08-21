@@ -48,7 +48,7 @@ public class FullAddressActivty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_address_activty);
         //툴바 세팅
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_auto_complete);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_auto_complete);
         setSupportActionBar(toolbar);
 
         toolbar.setTitle(R.string.app_name);
@@ -60,7 +60,7 @@ public class FullAddressActivty extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }*/
+        }
 
         Button button = (Button) findViewById(R.id.button);
         edit_ex = (EditText) findViewById(R.id.edit_ex);
@@ -88,7 +88,18 @@ public class FullAddressActivty extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(FullAddressActivty.this, InputActivity.class);
+                setResult(RESULT_CANCELED, intent);
+                finish();
+                break;
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
     public void onClick(View v) {
         //    final EditText edit_law = (EditText) findViewById(R.id.edit);
         final ArrayList<String> addressList = new ArrayList<>();
