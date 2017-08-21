@@ -120,6 +120,7 @@ public class AutoCompleteActivity extends AppCompatActivity {
 
                                         intent.putExtra("address_name", address_send);
                                         intent.putExtra("position", position);
+                                        intent.putExtra("division",1);
                                         setResult(RESULT_OK, intent);
                                         finish();
                                     }

@@ -146,17 +146,12 @@ public class FullAddressActivty extends AppCompatActivity {
             }
         });
         intent1.putExtra("lati_full",lati_full);
-        Log.i("lati",String.valueOf(lati_full));
         intent1.putExtra("lon_full",lon_full);
-
-        Log.i("lon",String.valueOf(lon_full));
         intent1.putExtra("position_full",position);
-
-        Log.i("position",String.valueOf(position));
         intent1.putExtra("fulladdress",final_fulladdress);
-
-        Log.i("fulladdress",final_fulladdress);
+        intent1.putExtra("division",2);
         setResult(RESULT_OK, intent1);
+
         finish();
     }
 }
