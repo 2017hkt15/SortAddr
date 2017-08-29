@@ -26,6 +26,7 @@ import com.example.mylibrary.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.a2017hkt15.sortaddr.Variable.MAX_NUMBER;
 import static com.a2017hkt15.sortaddr.Variable.destinationPriority;
 
 /**
@@ -80,26 +81,35 @@ public class ListViewAdapter extends BaseAdapter {
         imageButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pos != 0 && pos + 1 <= inputActivity.getAddressInfo_array().size()) {
+                if(pos==0)
+                {
+                    return;
 
-                    //해당 arraylist의 값을 삭제
-                    inputActivity.getAddressInfo_array().remove(pos);
-                    //해당 장소의 마커 삭제
-                    inputActivity.getMarkerController().removeMarker(pos);
-                    // listViewWayList.remove(pos);
-                    // Variable.numberOfLine--;
-                    // notifyDataSetChanged();    삭제해도 되는 듯
                 }
-                if (pos >= inputActivity.getAddressInfo_array().size() + 1) {
-                    listViewWayList.remove(pos);
-                    Variable.numberOfLine--;
-                    notifyDataSetChanged();
-                } else {
-                    listViewWayList.remove(pos);
-                    Variable.numberOfLine--;
-                    notifyDataSetChanged();
-                }
+                else {
+                    if (pos + 1 <= inputActivity.getAddressInfo_array().size()) {
+                        for (int i = 0; i < MAX_NUMBER; i++)
+                            for (int j = 0; j < MAX_NUMBER; j++)
+                                destinationPriority[i][j] = false;
 
+                        //해당 arraylist의 값을 삭제
+                        inputActivity.getAddressInfo_array().remove(pos);
+                        //해당 장소의 마커 삭제
+                        inputActivity.getMarkerController().removeMarker(pos);
+                        // listViewWayList.remove(pos);
+                        // Variable.numberOfLine--;
+                        // notifyDataSetChanged();    삭제해도 되는 듯
+                    }
+                    if (pos >= inputActivity.getAddressInfo_array().size() + 1) {
+                        listViewWayList.remove(pos);
+                        Variable.numberOfLine--;
+                        notifyDataSetChanged();
+                    } else {
+                        listViewWayList.remove(pos);
+                        Variable.numberOfLine--;
+                        notifyDataSetChanged();
+                    }
+                }
             }
         });
 
@@ -172,15 +182,28 @@ public class ListViewAdapter extends BaseAdapter {
         showDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String[] items = new String[]{"첫번째 목적지"
-                        ,"두번째 목적지"
-                        ,"세번째 목적지"
-                        ,"네번째 목적지"
-                        ,"다섯번째 목적지"
-                        ,"여섯번째 목적지"
-                        ,"일곱번째 목적지"
-                        ,"여덟번째 목적지"
-                        ,"아홉번째 목적지"};
+                int cnt=0;
+                String[] str = new String[MAX_NUMBER-1];
+                for(int i = 0; i < MAX_NUMBER-1; i++) {
+                    try {
+                        str[i] = listViewWayList.get(i + 1).getAddrStr();
+                        if(str[i]==null)
+                            str[i]="(없음)";
+                        cnt++;
+//                        Log.d("ffff","for moon "+i+" : "+str[i]);
+                    }
+                    catch (Exception e){
+                        //none
+                    }
+                }
+                Log.d("ffff","out moon 1");
+                //final String[] items = new String[]{str[0],str[1],str[2]};
+
+                final String[] items = new String[cnt];
+                Log.d("ffff","out moon 2 "+ items);
+                for(int i=0;i<cnt;i++){
+                    items[i]=str[i];
+                }
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
                 dialog.setTitle("먼저 방문할 곳을 고르세요")
@@ -191,7 +214,7 @@ public class ListViewAdapter extends BaseAdapter {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                                         if(isChecked) {
-                                            Toast.makeText(context,items[which],Toast.LENGTH_LONG).show();
+//                                            Toast.makeText(context,items[which],Toast.LENGTH_LONG).show();
                                             list.add(items[which]);
                                         } else {
                                             list.remove(items[which]);
@@ -205,6 +228,7 @@ public class ListViewAdapter extends BaseAdapter {
                         for (String item : list) {
                             selectedItem += item + ", ";
                         }
+                        selectedItem += "를 들렀다 갑니다";
 
                         Toast.makeText(context, selectedItem, Toast.LENGTH_LONG).show();
                     }

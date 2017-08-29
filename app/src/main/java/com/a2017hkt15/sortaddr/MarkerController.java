@@ -44,6 +44,10 @@ public class MarkerController {
         this.endMarkerIcon = endMarkerIcon;
         this.poiIcon = poiIcon;
         this.markerList = new ArrayList<TMapMarkerItem>();
+
+        for (int i = 0; i < 4; i++) {
+            markerList.add(new TMapMarkerItem());
+        }
     }
 
     // 위도, 경도, 마커(장소) 이름
@@ -73,7 +77,7 @@ public class MarkerController {
 
     public void setStartMarker(float latitude, float longitude, String placeName) {
         // 시작 마커가 이미 있다면 제거하고 새롭게 생성
-        if ( isStartExist ) removeMarker(0);
+        removeMarker(0);
 
         TMapPoint placePoint = new TMapPoint(latitude, longitude);
         TMapMarkerItem placeMarker = new TMapMarkerItem();
