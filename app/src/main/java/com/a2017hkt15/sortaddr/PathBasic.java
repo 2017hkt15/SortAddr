@@ -78,8 +78,10 @@ public class PathBasic {
                 Variable.destinationPriority[i][i] = false;
 
         distanceArr = distanceCalcThread.getDistanceArr();
+        Log.d("dddd","size : "+markerController.getMarkerList().size());
         CalcPath calcPath = new CalcPath(0, markerController.getMarkerList().size(), distanceArr, markerController.getEndIndex(), Variable.destinationPriority);
         PathInfo pathInfo = calcPath.pathCalc();
+        Log.d("dddd",""+pathInfo.getPathRoute()[0]+","+pathInfo.getPathRoute()[1]+","+pathInfo.getPathRoute()[2]+","+pathInfo.getPathRoute()[3]+","+pathInfo.getPathRoute()[4]+","+pathInfo.getPathRoute()[5]+","+pathInfo.getPathRoute()[6]+","+pathInfo.getPathRoute()[7]);
 
         if ( pathInfo == null ) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(InputActivity.mContext);

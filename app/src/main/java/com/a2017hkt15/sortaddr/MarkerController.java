@@ -144,6 +144,33 @@ public class MarkerController {
         return endIndex;
     }
 
+    public void modifyMarker(float latitude, float longitude, String placeName, int markerIndex) {
+        if (markerList.size() <= markerIndex) return;
+        Log.d("ssss", markerList.get(markerIndex).getID());
+        tmapView.removeMarkerItem(markerList.get(markerIndex).getID());
+        markerList.remove(markerIndex);
+
+        TMapPoint placePoint = new TMapPoint(latitude, longitude);
+        TMapMarkerItem placeMarker = new TMapMarkerItem();
+
+        // 마커 속성 설정
+        placeMarker.setTMapPoint(placePoint);
+        placeMarker.setID(placeName);
+        placeMarker.setName(placeName);
+        placeMarker.setVisible(TMapMarkerItem.VISIBLE);
+        placeMarker.setIcon(passMarkerIcon);
+        placeMarker.setPosition(markerCenterDx, markerCenterDy);
+        placeMarker.setCanShowCallout(true);
+        placeMarker.setAutoCalloutVisible(true);
+        placeMarker.setCalloutTitle(placeName);
+        placeMarker.setCalloutLeftImage(passMarkerIcon);
+        placeMarker.setCalloutRightButtonImage(poiIcon);
+
+        // 배열리스트 및 지도에 마커 추가
+        tmapView.addMarkerItem(placeMarker.getID(), placeMarker);
+        markerList.add(markerIndex, placeMarker);
+    }
+
     // Parameter : 지울 마커의 인덱스 번호
     public void removeMarker(int markerIndex) {
         // 해당 번호의 마커를 맵과 배열 리스트에서 삭제.
