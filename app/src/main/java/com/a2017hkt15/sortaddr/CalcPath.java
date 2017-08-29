@@ -12,8 +12,7 @@ public class CalcPath {
     double min;
     int[] minPath;
     double[][] map;
-    int[][] priority;
-    int[] fix;
+    boolean[][] priority;
     int start;
     int destination; // if -1 , it doesn't have specific desti.
 
@@ -25,11 +24,10 @@ public class CalcPath {
         min=987654321;
         minPath=new int[MAX_NODE];
         map=new double[MAX_NODE][MAX_NODE];
-        priority=new int[MAX_NODE][MAX_NODE];
-        fix=new int[MAX_NODE];
+        priority=new boolean[MAX_NODE][MAX_NODE];
     }
 
-    public CalcPath(int start,int nodeNum,double[][] map,int dest,int[][] priority,int[] fix)
+    public CalcPath(int start,int nodeNum,double[][] map,int dest,boolean[][] priority)
     {
         this();
         this.start=start;
@@ -37,7 +35,6 @@ public class CalcPath {
         this.destination=dest;
         this.map=map;
         this.priority=priority;
-        this.fix=fix;
     }
 
     public PathInfo pathCalc()
@@ -50,6 +47,9 @@ public class CalcPath {
         Log.d("ssss","calc finish");
 
         //Log.d("ssss",minPath[0]+","+minPath[1]+","+minPath[2]+","+minPath[3]+","+minPath[4]);
+
+        if(min==987654321)//존재할수없는 priority
+            return null;
 
         ret.setPathLength(min);
         ret.setPathRoute(minPath);
@@ -157,27 +157,44 @@ public class CalcPath {
         }
 
 
-        for (int i = 0; i < nodeNum; i++)
-        {
+
+
+        for (int i = 0; i < nodeNum; i++) {
             boolean flag = true;
-            for (int j = 0; j < num; j++)
-            {
-                if (i == ver[j] || i==destination)
-                {
+            for (int j = 0; j < num; j++) {
+                if (i == ver[j] || i == destination) {
                     flag = false;
                     break;
                 }
             }
-            if (flag)
+            for(int j=0;j<nodeNum;j++)
             {
-                ver[num]=i;
-
-                if (length < min)
+                if(priority[i][j])
                 {
-                    preCalcDfs(num+1, ver, length+map[ver[num-1]][i]);
+                    boolean f=false;
+                    for(int k=0;k<num;k++)
+                    {
+                        if(ver[k]==j) {
+                            f = true;
+                            break;
+                        }
+                    }
+                    if(!f)
+                    {
+                        flag=false;
+                        break;
+                    }
+                }
+            }
+            if (flag) {
+                ver[num] = i;
+
+                if (length < min) {
+                    preCalcDfs(num + 1, ver, length + map[ver[num - 1]][i]);
                 }
             }
         }
+
 
         return min;
     }
