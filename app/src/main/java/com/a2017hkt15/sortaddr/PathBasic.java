@@ -73,8 +73,15 @@ public class PathBasic {
         {
             markerController.setEndIndex(-1);
         }
+    /*
+        for (int i = 0; i < Variable.MAX_NUMBER - 1; i++) {
+            for for (int j = 0; j < Variable.MAX_NUMBER; j++) {
 
+            }
+        }
+        Variable.destinationPriority
 
+*/
         distanceArr = distanceCalcThread.getDistanceArr();
         CalcPath calcPath = new CalcPath(0, markerController.getMarkerList().size(), distanceArr, markerController.getEndIndex(),new boolean[10][10]);
         PathInfo pathInfo = calcPath.pathCalc();
