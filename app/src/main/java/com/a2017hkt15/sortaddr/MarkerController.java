@@ -46,7 +46,10 @@ public class MarkerController {
         this.markerList = new ArrayList<TMapMarkerItem>();
 
         for (int i = 0; i < 4; i++) {
-            markerList.add(new TMapMarkerItem());
+            TMapMarkerItem temp = new TMapMarkerItem();
+            temp.setID("dummy" + i);
+            markerList.add(temp);
+            tmapView.addMarkerItem(temp.getID(), temp);
         }
     }
 
@@ -145,13 +148,7 @@ public class MarkerController {
     public void removeMarker(int markerIndex) {
         // 해당 번호의 마커를 맵과 배열 리스트에서 삭제.
         if (markerList.size() <= markerIndex) return;
-        else if (markerList.get(markerIndex).getID() == null) return;
-        try {
-            tmapView.removeMarkerItem(markerList.get(markerIndex).getID());
-        }
-        catch (Exception e) {
-
-        }
+        tmapView.removeMarkerItem(markerList.get(markerIndex).getID());
         markerList.remove(markerIndex);
     }
 

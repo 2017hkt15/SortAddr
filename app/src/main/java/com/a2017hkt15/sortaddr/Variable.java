@@ -14,6 +14,4 @@ public class Variable {
     public static String mapApiKey = "24021907-d553-3d4f-b555-0155ca3ccadb";
     public static int panelHeight=0;
     public static boolean destinationPriority[][] = new boolean[MAX_NUMBER][MAX_NUMBER];
-
-
 }
