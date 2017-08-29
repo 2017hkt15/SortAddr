@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AlertDialog;
@@ -186,7 +187,12 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         return super.onOptionsItemSelected(item);
     }
 
-
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            progressDialog.dismiss(); // 다이얼로그 삭제
+            // View갱신
+        }
+    };
 
     //검색 버튼 클릭
     //경로 출력
@@ -194,13 +200,24 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         if (AddressInfo_array.size() > 1) {    //출발지1개 목적지1개 일 때
             progressDialog = ProgressDialog.show(InputActivity.this, "경로 탐색 중", "잠시만 기다려주세요");
 
-            Handler mHandler = new Handler();
-            mHandler.postDelayed(new Runnable() {
+            mHandler = new Handler();
+
+            Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    // 처리할 부분
                     pathBasic.calcDistancePath(markerController.getMarkerList(),comeback.isChecked());
+                    mHandler.sendEmptyMessage(0);
                 }
-            }, 1000);
+            });
+            thread.start();
+
+//            mHandler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    pathBasic.calcDistancePath(markerController.getMarkerList(),comeback.isChecked());
+//                }
+//            }, 1000);
         } else if (AddressInfo_array.size() == 0) {   //출발지 입력을 안 했을때
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(InputActivity.this);
             alertDialog.setTitle("알림")
