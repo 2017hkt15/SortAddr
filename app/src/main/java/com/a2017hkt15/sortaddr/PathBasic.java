@@ -73,17 +73,12 @@ public class PathBasic {
         {
             markerController.setEndIndex(-1);
         }
-    /*
-        for (int i = 0; i < Variable.MAX_NUMBER - 1; i++) {
-            for for (int j = 0; j < Variable.MAX_NUMBER; j++) {
 
-            }
-        }
-        Variable.destinationPriority
+        for (int i = 0; i < Variable.MAX_NUMBER; i++)
+                Variable.destinationPriority[i][i] = false;
 
-*/
         distanceArr = distanceCalcThread.getDistanceArr();
-        CalcPath calcPath = new CalcPath(0, markerController.getMarkerList().size(), distanceArr, markerController.getEndIndex(),new boolean[10][10]);
+        CalcPath calcPath = new CalcPath(0, markerController.getMarkerList().size(), distanceArr, markerController.getEndIndex(), Variable.destinationPriority);
         PathInfo pathInfo = calcPath.pathCalc();
 
         if ( pathInfo == null ) {
