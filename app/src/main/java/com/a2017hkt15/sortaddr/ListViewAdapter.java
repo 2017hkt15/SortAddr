@@ -70,12 +70,19 @@ public class ListViewAdapter extends BaseAdapter {
         ImageButton imageButtonDelete = (ImageButton) convertView.findViewById(R.id.imageButtonDelete);
         TextView titleTextView = (TextView) convertView.findViewById(R.id.textViewTitle);
         EditText wayEditText = (EditText) convertView.findViewById(R.id.editTextWay);
+        showDialog = (Button)convertView.findViewById(R.id.buttonPriorityVisit);
 
 
 
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewWay listViewWay = listViewWayList.get(position);
+
+        if(pos == 0) {
+            showDialog.setVisibility(View.GONE);
+            imageButtonDelete.setVisibility(View.INVISIBLE);
+        }
+
         //초기값
         inputActivity.setButton_pos(-1);
         imageButtonDelete.setOnClickListener(new View.OnClickListener() {
@@ -179,8 +186,6 @@ public class ListViewAdapter extends BaseAdapter {
 
         //체크박스 Priority
         final List<String> list = new ArrayList<>();
-
-        showDialog = (Button)convertView.findViewById(R.id.buttonPriorityVisit);
         showDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
