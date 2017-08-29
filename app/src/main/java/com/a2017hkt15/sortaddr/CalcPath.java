@@ -12,6 +12,8 @@ public class CalcPath {
     double min;
     int[] minPath;
     double[][] map;
+    int[][] priority;
+    int[] fix;
     int start;
     int destination; // if -1 , it doesn't have specific desti.
 
@@ -23,15 +25,19 @@ public class CalcPath {
         min=987654321;
         minPath=new int[MAX_NODE];
         map=new double[MAX_NODE][MAX_NODE];
+        priority=new int[MAX_NODE][MAX_NODE];
+        fix=new int[MAX_NODE];
     }
 
-    public CalcPath(int start,int nodeNum,double[][] map,int dest)
+    public CalcPath(int start,int nodeNum,double[][] map,int dest,int[][] priority,int[] fix)
     {
         this();
         this.start=start;
         this.nodeNum= nodeNum;
         this.destination=dest;
         this.map=map;
+        this.priority=priority;
+        this.fix=fix;
     }
 
     public PathInfo pathCalc()
@@ -39,11 +45,11 @@ public class CalcPath {
         PathInfo ret=new PathInfo();
 
         Log.d("ssss","calc start, destination : "+destination+", strat :"+start+", num : "+nodeNum);
-        Log.d("ssss","map : "+map[0][0]+","+map[0][1]+","+map[0][2]);
+        //Log.d("ssss","map : "+map[0][0]+","+map[0][1]+","+map[0][2]);
         preCalcDfs(1,new int[10],0);
         Log.d("ssss","calc finish");
 
-        Log.d("ssss",minPath[0]+","+minPath[1]+","+minPath[2]+","+minPath[3]+","+minPath[4]);
+        //Log.d("ssss",minPath[0]+","+minPath[1]+","+minPath[2]+","+minPath[3]+","+minPath[4]);
 
         ret.setPathLength(min);
         ret.setPathRoute(minPath);
@@ -53,7 +59,6 @@ public class CalcPath {
 
     public double preCalc(int num, int[] ver, double length)
     {
-
         int[] v=new int[MAX_NODE];
         double ret = length;
 
@@ -101,7 +106,6 @@ public class CalcPath {
     private double preCalcDfs(int num, int[] ver, double length)
     {
         //도착지가 정해졌는지 않됬는지
-        Log.d("ssss","in dfs");
         if (destination==-1 && num == nodeNum)//일단 도착지 없음
         {
             if (min > length)

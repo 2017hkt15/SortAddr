@@ -74,8 +74,8 @@ public class PathBasic {
 
 
         distanceArr = distanceCalcThread.getDistanceArr();
-        CalcPath calcPath = new CalcPath(0, markerController.getMarkerList().size(), distanceArr, markerController.getEndIndex());
-        this.showPath(calcPath.pathCalc());
+        //CalcPath calcPath = new CalcPath(0, markerController.getMarkerList().size(), distanceArr, markerController.getEndIndex());
+        //this.showPath(calcPath.pathCalc());
     }
 
     // 완료된 경로를 지도에 표시
