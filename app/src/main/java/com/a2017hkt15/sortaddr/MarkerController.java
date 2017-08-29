@@ -145,7 +145,13 @@ public class MarkerController {
     public void removeMarker(int markerIndex) {
         // 해당 번호의 마커를 맵과 배열 리스트에서 삭제.
         if (markerList.size() <= markerIndex) return;
-        tmapView.removeMarkerItem(markerList.get(markerIndex).getID());
+        else if (markerList.get(markerIndex).getID() == null) return;
+        try {
+            tmapView.removeMarkerItem(markerList.get(markerIndex).getID());
+        }
+        catch (Exception e) {
+
+        }
         markerList.remove(markerIndex);
     }
 

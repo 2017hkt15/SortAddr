@@ -172,7 +172,10 @@ public class ListViewAdapter extends BaseAdapter {
                 });
                 AlertDialog alertDialog = dialog.create();
                 alertDialog.show();
+
+                Log.d("ffff",Variable.destinationPriority[0][0]+","+Variable.destinationPriority[0][1]+","+Variable.destinationPriority[1][0]+","+Variable.destinationPriority[1][1]);
             }
+
         });
 
         //체크박스 Priority
