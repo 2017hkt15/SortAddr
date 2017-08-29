@@ -1,14 +1,18 @@
 package com.a2017hkt15.sortaddr;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -44,6 +48,21 @@ public class FullAddressActivty extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_address_activty);
+        //툴바 세팅
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_auto_complete);
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitle(R.string.app_name);
+        String subtitle = "목적지 입력: 검색 후 입력 클릭";
+        toolbar.setSubtitle(subtitle);
+
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setSubtitleTextColor(ContextCompat.getColor(FullAddressActivty.this, R.color.colorSubtitle));
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         Button button = (Button) findViewById(R.id.button);
         edit_ex = (EditText) findViewById(R.id.edit_ex);
         edit_law = (EditText) findViewById(R.id.edit);
@@ -70,7 +89,18 @@ public class FullAddressActivty extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(FullAddressActivty.this, InputActivity.class);
+                setResult(RESULT_CANCELED, intent);
+                finish();
+                break;
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
     public void onClick(View v) {
         //    final EditText edit_law = (EditText) findViewById(R.id.edit);
         final ArrayList<String> addressList = new ArrayList<>();
@@ -81,6 +111,7 @@ public class FullAddressActivty extends AppCompatActivity {
         tMapdata.findAddressPOI(fulladdress, 300, new TMapData.FindAddressPOIListenerCallback() {
             @Override
             public void onFindAddressPOI(ArrayList<TMapPOIItem> poiItem) {
+
                 for (int i = 0; i < poiItem.size(); i++) {
                     TMapPOIItem item = poiItem.get(i);
                     addressList.add(item.getPOIAddress().replace("null", ""));

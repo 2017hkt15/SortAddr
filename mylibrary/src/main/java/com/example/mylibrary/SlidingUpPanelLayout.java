@@ -1333,6 +1333,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
     }
 
 
+
     private class DragHelperCallback extends ViewDragHelper.Callback {
 
         @Override
