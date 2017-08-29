@@ -15,6 +15,7 @@ import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -241,7 +242,10 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
             //edittext에 setText
             adapter.notifyDataSetChanged();
 
-            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+
+
+
+            //mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
 
             //변경완료
             runOnUiThread(new Runnable() {
@@ -276,6 +280,9 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         } else if (resultCode == RESULT_CANCELED) {
 
         }
+
+        Log.d("supl","supl end");
+//        mLayout.setPanelHeight(Variable.panelHeight);
     }
 
     public int getButton_pos() {

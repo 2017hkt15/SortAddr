@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.ListAdapter;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.mylibrary.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 
@@ -112,6 +115,10 @@ public class ListViewAdapter extends BaseAdapter {
                     } catch (Exception e) {
 
                     }
+
+                Variable.panelHeight= ((SlidingUpPanelLayout) inputActivity.findViewById(R.id.sliding_layout)).getPanelHeight();
+                //Log.d("cccc","Adapter height"+Variable.panelHeight);
+
                 intent.putExtra("position", pos);
                 inputActivity.startActivityForResult(intent, 1);   //pos
             }
