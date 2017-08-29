@@ -173,7 +173,6 @@ public class ListViewAdapter extends BaseAdapter {
                 AlertDialog alertDialog = dialog.create();
                 alertDialog.show();
 
-                Log.d("ffff",Variable.destinationPriority[0][0]+","+Variable.destinationPriority[0][1]+","+Variable.destinationPriority[1][0]+","+Variable.destinationPriority[1][1]);
             }
 
         });
@@ -231,7 +230,7 @@ public class ListViewAdapter extends BaseAdapter {
                         for (String item : list) {
                             selectedItem += item + ", ";
                         }
-                        selectedItem += "를 들렀다 갑니다";
+                        selectedItem += "을/를 들렀다 갑니다";
 
                         Toast.makeText(context, selectedItem, Toast.LENGTH_LONG).show();
                     }
@@ -243,6 +242,9 @@ public class ListViewAdapter extends BaseAdapter {
                 });
                 dialog.create();
                 dialog.show();
+
+                Log.d("ffff",Variable.destinationPriority[0][0]+","+Variable.destinationPriority[0][1]+","+Variable.destinationPriority[1][0]+","+Variable.destinationPriority[1][1]);
+
             }
         });
 
