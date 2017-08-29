@@ -1,7 +1,9 @@
 package com.a2017hkt15.sortaddr;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.renderscript.ScriptGroup;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.skp.Tmap.TMapData;
@@ -74,8 +76,28 @@ public class PathBasic {
 
 
         distanceArr = distanceCalcThread.getDistanceArr();
-        //CalcPath calcPath = new CalcPath(0, markerController.getMarkerList().size(), distanceArr, markerController.getEndIndex());
-        //this.showPath(calcPath.pathCalc());
+        CalcPath calcPath = new CalcPath(0, markerController.getMarkerList().size(), distanceArr, markerController.getEndIndex(),new boolean[10][10]);
+        PathInfo pathInfo = calcPath.pathCalc();
+
+        if ( pathInfo == null ) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(InputActivity.mContext);
+            alertDialog.setTitle("알림")
+                    .setMessage("만들어질 수 없는 경로입니다.")
+                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+            AlertDialog dialog = alertDialog.create();
+            if (InputActivity.progressDialog != null) {
+                InputActivity.progressDialog.dismiss();
+                InputActivity.progressDialog = null;
+            }
+            dialog.show();
+        }
+        else {
+            this.showPath(pathInfo);
+        }
     }
 
     // 완료된 경로를 지도에 표시

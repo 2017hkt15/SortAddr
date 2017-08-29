@@ -53,6 +53,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
     float lat;
     float lon;
     static ProgressDialog progressDialog;
+    public static Context mContext;
 
     private TMapGpsManager tmapgps = null;
     private TMapView tmapview = null;
@@ -61,6 +62,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
+        mContext=this;
 
         Variable.numberOfLine=0;
 
@@ -184,6 +186,8 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         return super.onOptionsItemSelected(item);
     }
 
+
+
     //검색 버튼 클릭
     //경로 출력
     private void findButton() {
@@ -194,7 +198,6 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
                     pathBasic.calcDistancePath(markerController.getMarkerList(),comeback.isChecked());
                 }
             }, 1000);
