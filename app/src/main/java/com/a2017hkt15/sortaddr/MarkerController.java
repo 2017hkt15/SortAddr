@@ -103,15 +103,10 @@ public class MarkerController {
 
     public void setMarkerNumber(int index, int number) {
         // 경유지 마커
-            if (number == 0) return;
-            if (isEndExist && endIndex == markerList.size() - 1) return;
-            markerList.get(index).setIcon(numberMarkerIcon[number]);
-        try {
-            tmapView.removeMarkerItem(markerList.get(index).getID());
-        }
-        catch (Exception e) {
-
-        }
+        if (number == 0) return;
+        if (isEndExist && endIndex == markerList.size() - 1) return;
+        markerList.get(index).setIcon(numberMarkerIcon[number]);
+        tmapView.removeMarkerItem(markerList.get(index).getID());
         tmapView.addMarkerItem(markerList.get(index).getID(), markerList.get(index));
     }
 
@@ -151,7 +146,12 @@ public class MarkerController {
         // 해당 번호의 마커를 맵과 배열 리스트에서 삭제.
         if (markerList.size() <= markerIndex) return;
         else if (markerList.get(markerIndex).getID() == null) return;
-        tmapView.removeMarkerItem(markerList.get(markerIndex).getID());
+        try {
+            tmapView.removeMarkerItem(markerList.get(markerIndex).getID());
+        }
+        catch (Exception e) {
+
+        }
         markerList.remove(markerIndex);
     }
 
