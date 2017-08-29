@@ -1,10 +1,12 @@
 package com.a2017hkt15.sortaddr;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,7 +101,7 @@ public class ListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //TODO: 입력하는 Activity로 이동
-                Intent intent = new Intent(context, AutoCompleteActivity.class);
+              /*  Intent intent = new Intent(context, AutoCompleteActivity.class);
                 //position값 보냄
                 if (pos != 0) {
                     try {
@@ -121,6 +123,39 @@ public class ListViewAdapter extends BaseAdapter {
 
                 intent.putExtra("position", pos);
                 inputActivity.startActivityForResult(intent, 1);   //pos
+            }
+        });
+
+        // 아이템 내 각 위젯에 데이터 반영
+//        imageButtonDelete.setImageDrawable(listViewWay.getDeleteImage());
+        titleTextView.setText(listViewWay.getTitleStr());
+        wayEditText.setText(listViewWay.getAddrStr());
+
+        return convertView;*/
+                final CharSequence[] selection = {"명칭 검색","주소 검색"};
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                dialog.setTitle("알림");
+                dialog.setSingleChoiceItems(selection, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(context,selection[which],Toast.LENGTH_SHORT).show();
+                        if(which==0) {
+                            Intent intent = new Intent(context, AutoCompleteActivity.class);
+                            intent.putExtra("position", pos);
+                            inputActivity.startActivityForResult(intent, 10);
+                            dialog.cancel();
+                        }
+                        else {
+                            Intent intent1 = new Intent(context, FullAddressActivty.class);
+                            intent1.putExtra("position",pos);
+                            //inputActivity.startActivity(intent);
+                            inputActivity.startActivityForResult(intent1,2);
+                            dialog.cancel();
+                        }
+                    }
+                });
+                AlertDialog alertDialog = dialog.create();
+                alertDialog.show();
             }
         });
 
