@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,12 +24,17 @@ import android.widget.Toast;
 import com.example.mylibrary.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.a2017hkt15.sortaddr.Variable.destinationPriority;
 
 /**
  * Created by gwmail on 2017-08-21.
  */
 
 public class ListViewAdapter extends BaseAdapter {
+
+    private Button showDialog;
     private InputActivity inputActivity;
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewWay> listViewWayList = new ArrayList<>();
@@ -158,6 +164,62 @@ public class ListViewAdapter extends BaseAdapter {
                 alertDialog.show();
             }
         });
+
+        //체크박스 Priority
+        final List<String> list = new ArrayList<>();
+
+        showDialog = (Button)convertView.findViewById(R.id.buttonPriorityVisit);
+        showDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String[] items = new String[]{"첫번째 목적지"
+                        ,"두번째 목적지"
+                        ,"세번째 목적지"
+                        ,"네번째 목적지"
+                        ,"다섯번째 목적지"
+                        ,"여섯번째 목적지"
+                        ,"일곱번째 목적지"
+                        ,"여덟번째 목적지"
+                        ,"아홉번째 목적지"};
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                dialog.setTitle("먼저 방문할 곳을 고르세요")
+                        .setMultiChoiceItems(
+                                items
+                                , destinationPriority[pos]
+                                , new DialogInterface.OnMultiChoiceClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                        if(isChecked) {
+                                            Toast.makeText(context,items[which],Toast.LENGTH_LONG).show();
+                                            list.add(items[which]);
+                                        } else {
+                                            list.remove(items[which]);
+                                        }
+                                    }
+                                }
+                        ).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String selectedItem = "";
+                        for (String item : list) {
+                            selectedItem += item + ", ";
+                        }
+
+                        Toast.makeText(context, selectedItem, Toast.LENGTH_LONG).show();
+                    }
+                }).setNeutralButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context, "취소", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.create();
+                dialog.show();
+            }
+        });
+
+
 
         // 아이템 내 각 위젯에 데이터 반영
 //        imageButtonDelete.setImageDrawable(listViewWay.getDeleteImage());
