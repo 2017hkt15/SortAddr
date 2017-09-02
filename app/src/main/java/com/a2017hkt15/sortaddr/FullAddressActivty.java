@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -73,11 +75,9 @@ public class FullAddressActivty extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    try {
                         onClick(v);
-                    }
-                    catch(Exception e)
-                    { }
+
+
                     return true;
                 }
                 return false;
@@ -110,7 +110,7 @@ public class FullAddressActivty extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void onClick(View v) {
+    public void onClick(View v){
         //    final EditText edit_law = (EditText) findViewById(R.id.edit);
         final ArrayList<String> addressList = new ArrayList<>();
 
@@ -118,34 +118,55 @@ public class FullAddressActivty extends AppCompatActivity {
 
         Log.d("check123", fulladdress);          //장소 입력
         tMapdata.findAddressPOI(fulladdress, 300, new TMapData.FindAddressPOIListenerCallback() {
+
+            Handler handler = new Handler() {
+                public void handleMessage(Message msg) {
+                    Toast.makeText(getApplicationContext(), "야레야레, 그런 주소는 존.재.하.지.않.는.다.구? (뭔소리야! 퍽!!!)", Toast.LENGTH_LONG).show();
+
+                    super.handleMessage(msg);
+
+                }
+
+            };
+
             @Override
             public void onFindAddressPOI(ArrayList<TMapPOIItem> poiItem) {
-
-                for (int i = 0; i < poiItem.size(); i++) {
-                    TMapPOIItem item = poiItem.get(i);
-                    addressList.add(item.getPOIAddress().replace("null", ""));
-                }
-                HashSet hs = new HashSet(addressList);
-                address_list = new ArrayList<String>(hs);
-                // ArrayList<String> address_List = new ArrayList<String>(hs);
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        ListView list = (ListView) findViewById(R.id.list);
-                        Adapter = new ArrayAdapter<String>(FullAddressActivty.this, android.R.layout.simple_list_item_1, address_list);
-                        list.setAdapter(Adapter);
-                        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                edit_law.setText(address_list.get(position));
-                                fulladdress = edit_law.getText().toString();
-                            }
-                        });
+                if(poiItem!=null) {
+                    for (int i = 0; i < poiItem.size(); i++) {
+                        TMapPOIItem item = poiItem.get(i);
+                        addressList.add(item.getPOIAddress().replace("null", ""));
                     }
-                });
+                    HashSet hs = new HashSet(addressList);
+                    address_list = new ArrayList<String>(hs);
+                    // ArrayList<String> address_List = new ArrayList<String>(hs);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            ListView list = (ListView) findViewById(R.id.list);
+                            Adapter = new ArrayAdapter<String>(FullAddressActivty.this, android.R.layout.simple_list_item_1, address_list);
+                            list.setAdapter(Adapter);
+                            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    edit_law.setText(address_list.get(position));
+                                    fulladdress = edit_law.getText().toString();
+                                }
+                            });
+                        }
+                    });
+                }
+                else
+                {
+                    handler.sendEmptyMessage(0);
+                }
             }
 
         });
 
+    }
+
+    public void toastShow(String msg)
+    {
+        Toast.makeText(FullAddressActivty.this, msg, Toast.LENGTH_LONG).show();
     }
 
     public void onPass(View v) {
