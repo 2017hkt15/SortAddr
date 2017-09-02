@@ -302,11 +302,15 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                                 markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr());
                             }
                             else {
+                                Log.d("qwer", "before");
                                 markerController.removeMarker(position);
+                                Log.d("qwer", "mid");
                                 markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr(), position);
+                                Log.d("qwer", "after");
                             }
                         }
                         catch (Exception e) {
+                            Log.d("qwer", "catch");
                             Toast.makeText(InputActivity.this, "중간 내용을 모두 채워야 합니다. 내용을 채우거나 줄을 삭제하고나서 다시 시도해주세요",Toast.LENGTH_LONG).show();
                         }
                     }

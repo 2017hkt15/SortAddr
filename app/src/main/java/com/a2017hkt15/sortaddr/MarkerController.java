@@ -87,6 +87,8 @@ public class MarkerController {
 
     // 위도, 경도, 마커(장소) 이름
     public void addMarker(float latitude, float longitude, String placeName, int pos) {
+        Log.d("qwer", "in");
+
         // 일반 마커
         // 포인트 지점 인스턴스 생성 후 마커 인스턴스 생성
         TMapPoint placePoint = new TMapPoint(latitude, longitude);
@@ -106,8 +108,8 @@ public class MarkerController {
         placeMarker.setCalloutRightButtonImage(poiIcon);
 
         // 배열리스트 및 지도에 마커 추가
-        tmapView.addMarkerItem(placeMarker.getID(), placeMarker);
         markerList.add(pos, placeMarker);
+        tmapView.addMarkerItem(placeMarker.getID(), placeMarker);
 
     }
 
