@@ -51,12 +51,20 @@ public class MarkerController {
         this.poiIcon = poiIcon;
         this.markerList = new ArrayList<TMapMarkerItem>();
 
+
+        TMapMarkerItem temp = new TMapMarkerItem();
+        temp.setID("dummy" + 1);
+        markerList.add(temp);
+        tmapView.addMarkerItem(temp.getID(), temp);
+
+        /*
         for (int i = 0; i < 2; i++) {
             TMapMarkerItem temp = new TMapMarkerItem();
             temp.setID("dummy" + i);
             markerList.add(temp);
             tmapView.addMarkerItem(temp.getID(), temp);
         }
+        */
     }
 
     // 위도, 경도, 마커(장소) 이름

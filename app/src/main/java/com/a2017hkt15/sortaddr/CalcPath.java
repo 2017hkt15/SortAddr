@@ -34,20 +34,37 @@ public class CalcPath {
         this.nodeNum= nodeNum;
         this.destination=dest;
         this.map=map;
-        this.priority=priority;
+
+        for(int i=1;i<Variable.MAX_NUMBER;i++)
+        {
+            this.priority[i][0]=false;
+
+            for(int j=1;j<Variable.MAX_NUMBER;j++)
+            {
+                this.priority[i][j]=priority[i][j-1];
+            }
+        }
+        for (int i = 0; i < 3; i++) {
+            Log.d("zxcv","Line "+i);
+            Log.d("zxcv", this.priority[i][0]+","+this.priority[i][1]+","+this.priority[i][2]+","+this.priority[i][3]+","+this.priority[i][4]);
+
+        }
+
+        for (int i = 0; i < Variable.MAX_NUMBER; i++)
+            this.priority[i][i] = false;
+
+        for (int i = 0; i < 3; i++) {
+            Log.d("zxcv","Line "+i);
+            Log.d("zxcv", this.priority[i][0]+","+this.priority[i][1]+","+this.priority[i][2]+","+this.priority[i][3]+","+this.priority[i][4]);
+
+        }
     }
 
     public PathInfo pathCalc()
     {
         PathInfo ret=new PathInfo();
 
-        for (int i = 0; i < MAX_NODE; i++) {
-            Log.d("zxcv", priority[i].toString());
-            for (int j = 0; j < MAX_NODE; j++) {
-                Log.d("zxcv", "" + priority[i][j]);
-            }
-            Log.d("zxcv", "line finish");
-        }
+
 
 
         Log.d("ssss","calc start, destination : "+destination+", strat :"+start+", num : "+nodeNum);
