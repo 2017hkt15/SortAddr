@@ -29,6 +29,7 @@ public class AutoCompleteActivity extends AppCompatActivity {
     static double lon;
     String address;
     EditText editText;
+    String ggu="어이어이, 그 앞은 無.다.";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +95,7 @@ public class AutoCompleteActivity extends AppCompatActivity {
                     public void onAutoComplete(ArrayList<String> poiltem) {
                         if(poiltem.size()==0) {
                             addressList.clear();
-                            addressList.add("검색 결과가 없습니다.");
+                            addressList.add(ggu);
                         }
 
                         for (int i = 0; i < poiltem.size(); i++) {
@@ -110,6 +111,8 @@ public class AutoCompleteActivity extends AppCompatActivity {
                                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        if(addressList.get(position).equals(ggu))
+                                            return;
                                         editText.setText(addressList.get(position));
                                         address_send = editText.getText().toString();
                                         Intent intent1 = getIntent();
