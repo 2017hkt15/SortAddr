@@ -72,7 +72,11 @@ public class FullAddressActivty extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    onClick(v);
+                    try {
+                        onClick(v);
+                    }
+                    catch(Exception e)
+                    { }
                     return true;
                 }
                 return false;
