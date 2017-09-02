@@ -41,6 +41,15 @@ public class CalcPath {
     {
         PathInfo ret=new PathInfo();
 
+        for (int i = 0; i < MAX_NODE; i++) {
+            Log.d("zxcv", priority[i].toString());
+            for (int j = 0; j < MAX_NODE; j++) {
+                Log.d("zxcv", "" + priority[i][j]);
+            }
+            Log.d("zxcv", "line finish");
+        }
+
+
         Log.d("ssss","calc start, destination : "+destination+", strat :"+start+", num : "+nodeNum);
         //Log.d("ssss","map : "+map[0][0]+","+map[0][1]+","+map[0][2]);
         preCalcDfs(1,new int[10],0);
