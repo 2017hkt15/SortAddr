@@ -181,31 +181,55 @@ public class FullAddressActivty extends AppCompatActivity {
         position = intent.getIntExtra("position", 0);
         Log.d("position",position+"");
         Intent intent1 = new Intent(FullAddressActivty.this, InputActivity.class);
-        runOnUiThread(new Runnable() {
-            public void run() {
-                try {
-                    addr = geocoder.getFromLocationName(fulladdress, 5);
-                } catch (Exception e) {
-                    Toast.makeText(FullAddressActivty.this, "주소 검색을 눌러 확인하고 다시 시도해주세요.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if (addr != null) {
-                    if (addr.size() == 0)
-                        Log.d("error", "addr.size222 == 0");
-                    for (int i = 0; i < addr.size(); i++) {
-                        Address lating = addr.get(i);
-                        double lat = lating.getLatitude(); // 위도가져오기
-                        double lon = lating.getLongitude(); // 경도가져오기
-                        loc.setLatitude(lat);
-                        loc.setLongitude(lon);
-                        lati_full = Float.parseFloat(String.valueOf(loc.getLatitude()));
-                        lon_full = Float.parseFloat(String.valueOf(loc.getLongitude()));
-                        Log.d("check20", String.valueOf(loc.getLatitude()));
-                        Log.d("check10", String.valueOf(loc.getLongitude()));
-                    }
-                }
+
+//        runOnUiThread(new Runnable() {
+//            public void run() {
+//                try {
+//                    addr = geocoder.getFromLocationName(fulladdress, 5);
+//                } catch (Exception e) {
+//                    Toast.makeText(FullAddressActivty.this, "주소 검색을 눌러 확인하고 다시 시도해주세요.", Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//                if (addr != null) {
+//                    if (addr.size() == 0)
+//                        Log.d("error", "addr.size222 == 0");
+//                    for (int i = 0; i < addr.size(); i++) {
+//                        Address lating = addr.get(i);
+//                        double lat = lating.getLatitude(); // 위도가져오기
+//                        double lon = lating.getLongitude(); // 경도가져오기
+//                        loc.setLatitude(lat);
+//                        loc.setLongitude(lon);
+//                        lati_full = Float.parseFloat(String.valueOf(loc.getLatitude()));
+//                        lon_full = Float.parseFloat(String.valueOf(loc.getLongitude()));
+//                        Log.d("check20", String.valueOf(loc.getLatitude()));
+//                        Log.d("check10", String.valueOf(loc.getLongitude()));
+//                    }
+//                }
+//            }
+//        });
+
+        try {
+            addr = geocoder.getFromLocationName(fulladdress, 5);
+        } catch (Exception e) {
+            Toast.makeText(FullAddressActivty.this, "주소 검색을 눌러 확인하고 다시 시도해주세요.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (addr != null) {
+            if (addr.size() == 0)
+                Log.d("error", "addr.size222 == 0");
+            for (int i = 0; i < addr.size(); i++) {
+                Address lating = addr.get(i);
+                double lat = lating.getLatitude(); // 위도가져오기
+                double lon = lating.getLongitude(); // 경도가져오기
+                loc.setLatitude(lat);
+                loc.setLongitude(lon);
+                lati_full = Float.parseFloat(String.valueOf(loc.getLatitude()));
+                lon_full = Float.parseFloat(String.valueOf(loc.getLongitude()));
+                Log.d("check20", String.valueOf(loc.getLatitude()));
+                Log.d("check10", String.valueOf(loc.getLongitude()));
             }
-        });
+        }
+
         intent1.putExtra("lati_full",lati_full);
         intent1.putExtra("lon_full",lon_full);
         intent1.putExtra("position_full",position);
