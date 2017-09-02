@@ -51,7 +51,7 @@ public class MarkerController {
         this.poiIcon = poiIcon;
         this.markerList = new ArrayList<TMapMarkerItem>();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 2; i++) {
             TMapMarkerItem temp = new TMapMarkerItem();
             temp.setID("dummy" + i);
             markerList.add(temp);
@@ -82,6 +82,32 @@ public class MarkerController {
         // 배열리스트 및 지도에 마커 추가
         tmapView.addMarkerItem(placeMarker.getID(), placeMarker);
         markerList.add(placeMarker);
+
+    }
+
+    // 위도, 경도, 마커(장소) 이름
+    public void addMarker(float latitude, float longitude, String placeName, int pos) {
+        // 일반 마커
+        // 포인트 지점 인스턴스 생성 후 마커 인스턴스 생성
+        TMapPoint placePoint = new TMapPoint(latitude, longitude);
+        TMapMarkerItem placeMarker = new TMapMarkerItem();
+
+        // 마커 속성 설정
+        placeMarker.setTMapPoint(placePoint);
+        placeMarker.setID(placeName);
+        placeMarker.setName(placeName);
+        placeMarker.setVisible(TMapMarkerItem.VISIBLE);
+        placeMarker.setIcon(passMarkerIcon);
+        placeMarker.setPosition(markerCenterDx, markerCenterDy);
+        placeMarker.setCanShowCallout(true);
+        placeMarker.setAutoCalloutVisible(true);
+        placeMarker.setCalloutTitle(placeName);
+        placeMarker.setCalloutLeftImage(passMarkerIcon);
+        placeMarker.setCalloutRightButtonImage(poiIcon);
+
+        // 배열리스트 및 지도에 마커 추가
+        tmapView.addMarkerItem(placeMarker.getID(), placeMarker);
+        markerList.add(pos, placeMarker);
 
     }
 
