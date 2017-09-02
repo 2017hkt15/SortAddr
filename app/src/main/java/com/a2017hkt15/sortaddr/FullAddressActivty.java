@@ -45,7 +45,7 @@ public class FullAddressActivty extends AppCompatActivity {
     float lati_full;
     float lon_full;
     List<Address> addr = null;
-    String ggu="어이 어이, 그 앞은 無.다.";
+    String ggu="어이 어이, 그 앞은 '無'다";
     private ArrayList<String> address_list;
 
     @Override

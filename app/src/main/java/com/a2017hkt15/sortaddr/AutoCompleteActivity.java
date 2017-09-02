@@ -29,7 +29,7 @@ public class AutoCompleteActivity extends AppCompatActivity {
     static double lon;
     String address;
     EditText editText;
-    String ggu="어이어이, 그 앞은 無.다.";
+    String ggu="어이어이, 그 앞은 '無'다.";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
