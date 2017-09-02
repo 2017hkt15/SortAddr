@@ -264,7 +264,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
 
 
             //mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-
+            Log.d("supl","address name = " + address_name);
             //변경완료
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -272,6 +272,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                     tdata.findAllPOI(address_name, new TMapData.FindAllPOIListenerCallback() {
                         @Override
                         public void onFindAllPOI(ArrayList<TMapPOIItem> poiItem) {
+                            Log.d("supl2","address name = " + address_name);
                             String[] array;
                             TMapPOIItem item2 = poiItem.get(poiItem.size() - 1);
                             array = item2.getPOIPoint().toString().split(" ");

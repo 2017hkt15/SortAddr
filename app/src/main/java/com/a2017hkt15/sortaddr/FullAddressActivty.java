@@ -67,7 +67,7 @@ public class FullAddressActivty extends AppCompatActivity {
         edit_ex = (EditText) findViewById(R.id.edit_ex);
         edit_law = (EditText) findViewById(R.id.edit);
         Adapter = new ArrayAdapter<String>(FullAddressActivty.this, android.R.layout.simple_list_item_1, addressList);
-        Log.i("gggg2", "gggg");
+        Log.d("gggg2", "gggg");
         edit_law.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -107,7 +107,7 @@ public class FullAddressActivty extends AppCompatActivity {
 
         fulladdress = edit_law.getText().toString();
 
-        Log.i("check123", fulladdress);          //장소 입력
+        Log.d("check123", fulladdress);          //장소 입력
         tMapdata.findAddressPOI(fulladdress, 300, new TMapData.FindAddressPOIListenerCallback() {
             @Override
             public void onFindAddressPOI(ArrayList<TMapPOIItem> poiItem) {
@@ -142,7 +142,7 @@ public class FullAddressActivty extends AppCompatActivity {
     public void onPass(View v) {
 
         final_fulladdress = fulladdress + edit_ex.getText().toString();
-        Log.i("final", final_fulladdress);
+        Log.d("final", final_fulladdress);
         //intent가 pos을 보냄
 
 
@@ -150,7 +150,7 @@ public class FullAddressActivty extends AppCompatActivity {
         final Geocoder geocoder = new Geocoder(FullAddressActivty.this);
         Intent intent = getIntent();
         position = intent.getIntExtra("position", 0);
-        Log.i("position",position+"");
+        Log.d("position",position+"");
         Intent intent1 = new Intent(FullAddressActivty.this, InputActivity.class);
         runOnUiThread(new Runnable() {
             public void run() {
@@ -161,7 +161,7 @@ public class FullAddressActivty extends AppCompatActivity {
                 }
                 if (addr != null) {
                     if (addr.size() == 0)
-                        Log.i("error", "addr.size222 == 0");
+                        Log.d("error", "addr.size222 == 0");
                     for (int i = 0; i < addr.size(); i++) {
                         Address lating = addr.get(i);
                         double lat = lating.getLatitude(); // 위도가져오기
@@ -170,8 +170,8 @@ public class FullAddressActivty extends AppCompatActivity {
                         loc.setLongitude(lon);
                         lati_full = Float.parseFloat(String.valueOf(loc.getLatitude()));
                         lon_full = Float.parseFloat(String.valueOf(loc.getLongitude()));
-                        Log.i("check20", String.valueOf(loc.getLatitude()));
-                        Log.i("check10", String.valueOf(loc.getLongitude()));
+                        Log.d("check20", String.valueOf(loc.getLatitude()));
+                        Log.d("check10", String.valueOf(loc.getLongitude()));
                     }
                 }
             }
