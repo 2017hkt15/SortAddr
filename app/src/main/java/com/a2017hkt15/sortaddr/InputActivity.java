@@ -1,6 +1,7 @@
 package com.a2017hkt15.sortaddr;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 import com.example.mylibrary.SlidingUpPanelLayout;
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapGpsManager;
+import com.skp.Tmap.TMapMarkerItem;
 import com.skp.Tmap.TMapPOIItem;
 import com.skp.Tmap.TMapView;
 
@@ -103,6 +105,15 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         tmapview.setTrackingMode(true);
         tmapview.setSightVisible(true);
         tmapview.setTrafficInfo(true);
+
+        tmapview.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
+            @Override
+            public void onCalloutRightButton(TMapMarkerItem markerItem) {
+                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, markerItem.getName());
+                startActivity(intent);
+            }
+        });
 
         layoutForMap.addView(tmapview);
 
