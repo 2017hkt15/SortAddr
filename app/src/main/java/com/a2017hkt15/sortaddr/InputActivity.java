@@ -262,59 +262,90 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
 
     //AutoComplete으로부터 데이터를 받음
     //position, address_name
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (resultCode == RESULT_OK) {
-            final int position = intent.getIntExtra("position", 0);
-            final String address_name = intent.getStringExtra("address_name");
-            addressInfo.setAddr(address_name);
-            adapter.getItem(position).setAddrStr(address_name);
-            //edittext에 setText
-            adapter.notifyDataSetChanged();
-
-
-
-            //mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-            Log.d("supl","address name = " + address_name);
-            //변경완료
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    TMapData tdata = new TMapData();
-                    tdata.findAllPOI(address_name, new TMapData.FindAllPOIListenerCallback() {
-                        @Override
-                        public void onFindAllPOI(ArrayList<TMapPOIItem> poiItem) {
-                            Log.d("supl2","address name = " + address_name);
-                            String[] array;
-                            TMapPOIItem item2 = poiItem.get(poiItem.size() - 1);
-                            array = item2.getPOIPoint().toString().split(" ");
-                            lat = Float.parseFloat(array[1]);
-                            addressInfo.setLat(Float.parseFloat(array[1]));
-                            lon = Float.parseFloat(array[3]);
-                            addressInfo.setLon(lon);
-                        }
-                    });
-                }
-            });
-            Handler mHandler = new Handler();
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    address_lat_lon = address_name + "," + String.valueOf(addressInfo.getLat()) + "," + String.valueOf(addressInfo.getLon());
-                    AddressInfo_array.add(position, addressInfo);
-                    if (position == 0) {
-                        markerController.setStartMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(0).getAddr());
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {int division = getIntent().getIntExtra("division",0);
+        if(resultCode == RESULT_OK) {
+            if (requestCode == 10) {
+                final int position = intent.getIntExtra("position", 0);
+                final String address_name = intent.getStringExtra("address_name");
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                addressInfo.setAddr(address_name);
+                adapter.getItem(position).setAddrStr(address_name);
+                Log.d("dd", "nodeNum : " + Variable.nodeNum);
+                adapter.getItem(Variable.nodeNum).setAddrStr(address_name);
+                //edittext에 setText
+                adapter.notifyDataSetChanged();
+                //변경완료
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        TMapData tdata = new TMapData();
+                        tdata.findAllPOI(address_name, new TMapData.FindAllPOIListenerCallback() {
+                            @Override
+                            public void onFindAllPOI(ArrayList<TMapPOIItem> poiItem) {
+                                String[] array;
+                                TMapPOIItem item2 = poiItem.get(poiItem.size() - 1);
+                                array = item2.getPOIPoint().toString().split(" ");
+                                lat = Float.parseFloat(array[1]);
+                                addressInfo.setLat(Float.parseFloat(array[1]));
+                                lon = Float.parseFloat(array[3]);
+                                addressInfo.setLon(lon);
+                            }
+                        });
                     }
-                    else {
-                            if ( position < markerController.getMarkerList().size() ) {
+                });
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        address_lat_lon = address_name + "," + String.valueOf(addressInfo.getLat()) + "," + String.valueOf(addressInfo.getLon());
+                        AddressInfo_array.add(position, addressInfo);
+                        if (position == 0) {
+                            markerController.setStartMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(0).getAddr());
+                        } else {
+                            if (position < markerController.getMarkerList().size()) {
                                 markerController.removeMarker(position);
                                 markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr(), position);
-                            }
-                            else if ( position == markerController.getMarkerList().size() ) {
+                            } else if (position == markerController.getMarkerList().size()) {
                                 markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr());
                             }
+                        }
                     }
-                }
-            }, 1000);
-        } else if (resultCode == RESULT_CANCELED) {
+                }, 1000);
+            }
+            if (requestCode == 2) {
+                final int position = intent.getIntExtra("position", 0);
+                final String address_name = intent.getStringExtra("fulladdress");
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                addressInfo.setAddr(address_name);
+                adapter.getItem(position).setAddrStr(address_name);
+                //edittext에 setText
+                adapter.notifyDataSetChanged();
+                //변경완료
+                final float lat = intent.getFloatExtra("lati_full", 0);
+                final float lon = intent.getFloatExtra("lon_full", 0);
+                addressInfo.setAddr(address_name);
+                addressInfo.setLat(lat);
+                addressInfo.setLon(lon);
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        address_lat_lon = address_name + "," + String.valueOf(addressInfo.getLat()) + "," + String.valueOf(addressInfo.getLon());
+                        AddressInfo_array.add(position, addressInfo);
+                        if (position == 0) {
+                            markerController.setStartMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(0).getAddr());
+                        } else {
+                            if (position < markerController.getMarkerList().size()) {
+                                markerController.removeMarker(position);
+                                markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr(), position);
+                            } else if (position == markerController.getMarkerList().size()) {
+                                markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr());
+                            }
+                        }
+                    }
+                }, 1000);
+            }
+        }
+        else if (resultCode == RESULT_CANCELED) {
 
         }
 
