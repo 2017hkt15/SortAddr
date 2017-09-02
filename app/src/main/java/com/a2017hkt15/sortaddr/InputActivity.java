@@ -294,8 +294,17 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                     }
                     else {
                         try {
-                            markerController.removeMarker(position);
-                            markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr(), position);
+                            if ( position < markerController.getMarkerList().size() ) {
+                                markerController.removeMarker(position);
+                                markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr(), position);
+                            }
+                            else if ( position == markerController.getMarkerList().size() ) {
+                                markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr());
+                            }
+                            else {
+                                markerController.removeMarker(position);
+                                markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr(), position);
+                            }
                         }
                         catch (Exception e) {
 
