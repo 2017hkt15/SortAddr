@@ -45,7 +45,7 @@ public class FullAddressActivty extends AppCompatActivity {
     float lati_full;
     float lon_full;
     List<Address> addr = null;
-    String ggu="어이 어이, 그 앞은 無.다.";
+    String ggu="검색 결과가 없습니다.";
     private ArrayList<String> address_list;
 
     @Override
@@ -207,7 +207,7 @@ public class FullAddressActivty extends AppCompatActivity {
         try {
             addr = geocoder.getFromLocationName(fulladdress, 5);
         } catch (Exception e) {
-            Toast.makeText(FullAddressActivty.this, "야레야레, 검색을 해.보.라.구? (뭔소리야! 퍽!!!)", Toast.LENGTH_LONG).show();
+            Toast.makeText(FullAddressActivty.this, "검색 결과가 없습니다.", Toast.LENGTH_LONG).show();
             return;
         }
         if (addr != null) {

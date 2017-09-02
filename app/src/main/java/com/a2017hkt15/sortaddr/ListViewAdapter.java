@@ -129,7 +129,7 @@ public class ListViewAdapter extends BaseAdapter {
                 {
                     if(listViewWayList.get(i).getAddrStr()==null||listViewWayList.get(i).getAddrStr().equals(""))
                     {
-                        Toast.makeText(context, "윗줄 부터 채우삼. 그럼 20000", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "윗 줄 부터 순서대로 채워야 합니다.", Toast.LENGTH_LONG).show();
                         return;
                     }
                 }
