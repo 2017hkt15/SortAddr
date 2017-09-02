@@ -293,8 +293,13 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                         markerController.setStartMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(0).getAddr());
                     }
                     else {
-                        markerController.removeMarker(position);
-                        markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr(), position);
+                        try {
+                            markerController.removeMarker(position);
+                            markerController.addMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(position).getAddr(), position);
+                        }
+                        catch (Exception e) {
+
+                        }
                     }
                 }
             }, 1000);
