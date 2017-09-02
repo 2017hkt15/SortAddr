@@ -122,8 +122,6 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         adapter.addItem("출발지");
 
         addLine();
-        addLine();
-        addLine();
 
         ImageButton addimageButton = (ImageButton) findViewById(R.id.addimageButton);
         addimageButton.setOnClickListener(new View.OnClickListener() {
