@@ -267,7 +267,6 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
             if (requestCode == 10) {
                 final int position = intent.getIntExtra("position", 0);
                 final String address_name = intent.getStringExtra("address_name");
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                 addressInfo.setAddr(address_name);
                 adapter.getItem(position).setAddrStr(address_name);
                 Log.d("dd", "nodeNum : " + Variable.nodeNum);
@@ -314,7 +313,6 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
             if (requestCode == 2) {
                 final int position = intent.getIntExtra("position", 0);
                 final String address_name = intent.getStringExtra("fulladdress");
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                 addressInfo.setAddr(address_name);
                 adapter.getItem(position).setAddrStr(address_name);
                 //edittext에 setText
