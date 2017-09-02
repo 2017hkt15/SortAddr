@@ -55,7 +55,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
 
@@ -124,6 +124,15 @@ public class ListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //TODO: 입력하는 Activity로 이동
+
+                for(int i=1;i<position;i++)
+                {
+                    if(listViewWayList.get(i).getAddrStr()==null||listViewWayList.get(i).getAddrStr().equals(""))
+                    {
+                        Toast.makeText(context, "윗줄 부터 채우삼. 그럼 20000", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
               /*  Intent intent = new Intent(context, AutoCompleteActivity.class);
                 //position값 보냄
                 if (pos != 0) {
