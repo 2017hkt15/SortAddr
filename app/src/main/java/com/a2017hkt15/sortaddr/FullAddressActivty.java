@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapPOIItem;
@@ -86,7 +87,11 @@ public class FullAddressActivty extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    onPass(v);
+                    try {
+                        onPass(v);
+                    } catch (Exception e) {
+                        Toast.makeText(FullAddressActivty.this, "주소 검색을 눌러 확인하고 다시 시도해주세요.", Toast.LENGTH_LONG).show();
+                    }
                     return true;
                 }
                 return false;
@@ -149,7 +154,6 @@ public class FullAddressActivty extends AppCompatActivity {
         Log.d("final", final_fulladdress);
         //intent가 pos을 보냄
 
-
         final Location loc = new Location("");
         final Geocoder geocoder = new Geocoder(FullAddressActivty.this);
         Intent intent = getIntent();
@@ -160,8 +164,9 @@ public class FullAddressActivty extends AppCompatActivity {
             public void run() {
                 try {
                     addr = geocoder.getFromLocationName(fulladdress, 5);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    Toast.makeText(FullAddressActivty.this, "주소 검색을 눌러 확인하고 다시 시도해주세요.", Toast.LENGTH_LONG).show();
+                    return;
                 }
                 if (addr != null) {
                     if (addr.size() == 0)

@@ -294,7 +294,13 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                     @Override
                     public void run() {
                         address_lat_lon = address_name + "," + String.valueOf(addressInfo.getLat()) + "," + String.valueOf(addressInfo.getLon());
-                        AddressInfo_array.add(position, addressInfo);
+                        if (position < AddressInfo_array.size()) {
+                            AddressInfo_array.remove(position);
+                            AddressInfo_array.add(position, addressInfo);
+                        } else if (position == AddressInfo_array.size()) {
+                            AddressInfo_array.add(position, addressInfo);
+                        }
+                        // AddressInfo_array.add(position, addressInfo);
                         if (position == 0) {
                             markerController.setStartMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(0).getAddr());
                         } else {
@@ -326,7 +332,13 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                     @Override
                     public void run() {
                         address_lat_lon = address_name + "," + String.valueOf(addressInfo.getLat()) + "," + String.valueOf(addressInfo.getLon());
-                        AddressInfo_array.add(position, addressInfo);
+                        if (position < AddressInfo_array.size()) {
+                            AddressInfo_array.remove(position);
+                            AddressInfo_array.add(position, addressInfo);
+                        } else if (position == AddressInfo_array.size()) {
+                            AddressInfo_array.add(position, addressInfo);
+                        }
+                        // AddressInfo_array.add(position, addressInfo);
                         if (position == 0) {
                             markerController.setStartMarker(AddressInfo_array.get(position).getLat(), AddressInfo_array.get(position).getLon(), AddressInfo_array.get(0).getAddr());
                         } else {
