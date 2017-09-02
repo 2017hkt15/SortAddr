@@ -113,6 +113,7 @@ public class AutoCompleteActivity extends AppCompatActivity {
                                         editText.setText(addressList.get(position));
                                         address_send = editText.getText().toString();
                                         Intent intent1 = getIntent();
+
                                         //위 경도값도 같이 보내기
                                         //받는 곳 inputActivity에서 배열로 저장 후 마커 찍기
                                         AddressInfo info = new AddressInfo();
@@ -133,7 +134,6 @@ public class AutoCompleteActivity extends AppCompatActivity {
                                                 });
                                             }
                                         });
-
                                         intent.putExtra("address_name", address_send);
                                         intent.putExtra("position", position);
                                         intent.putExtra("division",1);
