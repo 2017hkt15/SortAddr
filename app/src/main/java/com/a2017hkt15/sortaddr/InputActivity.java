@@ -269,8 +269,6 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                 final String address_name = intent.getStringExtra("address_name");
                 addressInfo.setAddr(address_name);
                 adapter.getItem(position).setAddrStr(address_name);
-                Log.d("dd", "nodeNum : " + Variable.nodeNum);
-                adapter.getItem(Variable.nodeNum).setAddrStr(address_name);
                 //edittext에 setText
                 adapter.notifyDataSetChanged();
                 //변경완료
