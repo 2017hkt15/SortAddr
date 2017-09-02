@@ -309,7 +309,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                 }, 1000);
             }
             if (requestCode == 2) {
-                final int position = intent.getIntExtra("position", 0);
+                final int position = intent.getIntExtra("position_full", 0);
                 final String address_name = intent.getStringExtra("fulladdress");
                 addressInfo.setAddr(address_name);
                 adapter.getItem(position).setAddrStr(address_name);
