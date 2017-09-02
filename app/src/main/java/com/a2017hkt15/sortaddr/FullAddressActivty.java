@@ -211,7 +211,7 @@ public class FullAddressActivty extends AppCompatActivity {
         try {
             addr = geocoder.getFromLocationName(fulladdress, 5);
         } catch (Exception e) {
-            Toast.makeText(FullAddressActivty.this, "주소 검색을 눌러 확인하고 다시 시도해주세요.", Toast.LENGTH_LONG).show();
+            Toast.makeText(FullAddressActivty.this, "야레야레, 검색을 해.보.라.구? (뭔소리야! 퍽!!!)", Toast.LENGTH_LONG).show();
             return;
         }
         if (addr != null) {
