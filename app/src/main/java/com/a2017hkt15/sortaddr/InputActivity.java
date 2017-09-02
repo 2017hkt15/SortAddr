@@ -307,7 +307,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                             }
                         }
                         catch (Exception e) {
-
+                            Toast.makeText(InputActivity.this, "중간 내용을 모두 채워야 합니다. 내용을 채우거나 줄을 삭제하고나서 다시 시도해주세요",Toast.LENGTH_LONG).show();
                         }
                     }
                 }
