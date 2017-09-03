@@ -120,14 +120,8 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
 
                 if(!isTmapApp) {
                     Toast.makeText(InputActivity.this, "T map 이 설치되어 있지 않습니다. 설치 페이지로 이동합니다.",Toast.LENGTH_LONG).show();
-                    ArrayList<String> result = tmaptapi.getTMapDownUrl();
-                    //TODO: Tmap 어플리케이션 다운로드 gogo
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(result.get(0)));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.setPackage("com.android.vending");
-                    startActivity(intent);
-
-                    Log.d("tmapicon", "미설치 : "+result + result.get(0));
+                    //T map 어플리케이션 다운로드
+                    tmapInstall();
                 } else {
                     boolean result = tmaptapi.invokeRoute(markerItem.getName(), (float)markerItem.getTMapPoint().getLongitude(), (float)markerItem.getTMapPoint().getLatitude());
                     Toast.makeText(InputActivity.this, "경로탐색을 시작합니다. 실행되지 않을 경우 시스템 어플리케이션을 확인해주세요.",Toast.LENGTH_LONG).show();
@@ -192,6 +186,20 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 
 
+    }
+
+    public void tmapInstall() {
+        new Thread() {
+            @Override
+            public void run() {
+                Uri uri = Uri.parse(tmaptapi.getTMapDownUrl().get(0));
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+
+                Log.d("tmapicon", "미설치 : "+tmaptapi.getTMapDownUrl().get(0));
+            }
+
+        }.start();
     }
 
     @Override
