@@ -123,7 +123,7 @@ public class ListViewAdapter extends BaseAdapter {
         wayEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: 입력하는 Activity로 이동
+                //입력하는 Activity로 이동
 
                 for(int i=1;i<position;i++)
                 {

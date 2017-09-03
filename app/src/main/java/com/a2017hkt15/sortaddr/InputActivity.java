@@ -196,7 +196,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
 
-                Log.d("tmapicon", "미설치 : "+tmaptapi.getTMapDownUrl().get(0));
+                Log.d("tmapicon", "미설치 : "+tmaptapi.getTMapDownUrl());
             }
 
         }.start();
