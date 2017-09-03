@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -120,13 +121,17 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
                 if(!isTmapApp) {
                     Toast.makeText(InputActivity.this, "T map 이 설치되어 있지 않습니다. 설치 페이지로 이동합니다.",Toast.LENGTH_LONG).show();
                     ArrayList<String> result = tmaptapi.getTMapDownUrl();
-                    //TODO : T map 설치페이지로 유도하기
-                    Log.d("tmapicon", ""+result);
+                    //TODO: Tmap 어플리케이션 다운로드 gogo
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(result.get(0)));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setPackage("com.android.vending");
+                    startActivity(intent);
+
+                    Log.d("tmapicon", "미설치 : "+result + result.get(0));
                 } else {
-//                    boolean result = tmaptapi.invokeRoute("T타워", 126.984098f, 37.566385f);
                     boolean result = tmaptapi.invokeRoute(markerItem.getName(), (float)markerItem.getTMapPoint().getLongitude(), (float)markerItem.getTMapPoint().getLatitude());
-                    Log.d("tmapicon", "Tmap 경로탐색" + result);
-                    //TODO : 왜 False 나오는지 모르겠다
+                    Toast.makeText(InputActivity.this, "경로탐색을 시작합니다. 실행되지 않을 경우 시스템 어플리케이션을 확인해주세요.",Toast.LENGTH_LONG).show();
+                    Log.d("tmapicon", "Tmap 경로탐색 : " + result);
                 }
                 //기존 구글검색 기능 Intent
 //                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
