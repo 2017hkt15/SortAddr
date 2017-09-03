@@ -109,6 +109,7 @@ public class PathBasic {
         double distanceSum = 0;
         for(int cur = 0; cur < markerList.size() - 1; cur++) {
             distanceSum += distanceArr[pathRoute[cur]][pathRoute[cur+1]] / 1000d;
+            Log.d("qwer",  "" + pathRoute[cur] + "/" + pathRoute[cur+1] + "/" +  distanceSum);
 
             if (pathRoute[cur + 1] != markerController.getEndIndex())
                 markerController.setMarkerNumber(pathRoute[cur + 1], cur + 1);
@@ -122,12 +123,15 @@ public class PathBasic {
 
             if ( markerController.getEndIndex() == 0 && cur == markerList.size() - 2) {
                 distanceSum += distanceArr[pathRoute[markerList.size() - 1]][0] / 1000d;
-                markerController.getMarkerList().get(pathRoute[cur+1]).setCalloutSubTitle("(" + Math.round(distanceSum) + "km)");
+                markerController.getMarkerList().get(pathRoute[0]).setCalloutSubTitle("(" + Math.round(distanceSum) + "km)");
                 polyLine = (distanceCalcThread.getPathLine())[pathRoute[markerList.size() - 1]][0];
                 polyLine.setLineColor(Color.BLUE);
                 polyLine.setLineWidth(5);
                 tmapView.addTMapPolyLine(pathID + "Route", polyLine);
                 pathID++;
+            }
+            if (markerController.getEndIndex() == -1 ) {
+                markerController.getMarkerList().get(pathRoute[0]).setCalloutSubTitle("");
             }
         }
 
