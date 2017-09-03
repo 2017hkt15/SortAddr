@@ -85,11 +85,12 @@
                 android:layout_height="wrap_content" />
 
 
-            <ImageButton
+            <Button
                 android:id="@+id/addimageButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                sothree:srcCompat="@android:drawable/ic_input_add" />
+                android:gravity="top"
+                android:text="목적지 추가"/>
 
         </LinearLayout>
     </LinearLayout>

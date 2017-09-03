@@ -153,7 +153,7 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
 
         addLine();
 
-        ImageButton addimageButton = (ImageButton) findViewById(R.id.addimageButton);
+        Button addimageButton = (Button) findViewById(R.id.addimageButton);
         addimageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
