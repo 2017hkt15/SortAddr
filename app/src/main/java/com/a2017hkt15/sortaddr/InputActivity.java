@@ -33,6 +33,7 @@ import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapGpsManager;
 import com.skp.Tmap.TMapMarkerItem;
 import com.skp.Tmap.TMapPOIItem;
+import com.skp.Tmap.TMapTapi;
 import com.skp.Tmap.TMapView;
 
 import java.util.ArrayList;
@@ -60,6 +61,8 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
 
     private TMapGpsManager tmapgps = null;
     private TMapView tmapview = null;
+
+    private TMapTapi tmaptapi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,12 +109,29 @@ public class InputActivity extends AppCompatActivity implements TMapGpsManager.o
         tmapview.setSightVisible(true);
         tmapview.setTrafficInfo(true);
 
+        tmaptapi = new TMapTapi(InputActivity.this);
+
         tmapview.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
             @Override
             public void onCalloutRightButton(TMapMarkerItem markerItem) {
-                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-                intent.putExtra(SearchManager.QUERY, markerItem.getName());
-                startActivity(intent);
+                //tmap 설치유무 확인
+                boolean isTmapApp = tmaptapi.isTmapApplicationInstalled();
+
+                if(!isTmapApp) {
+                    Toast.makeText(InputActivity.this, "T map 이 설치되어 있지 않습니다. 설치 페이지로 이동합니다.",Toast.LENGTH_LONG).show();
+                    ArrayList<String> result = tmaptapi.getTMapDownUrl();
+                    //TODO : T map 설치페이지로 유도하기
+                    Log.d("tmapicon", ""+result);
+                } else {
+//                    boolean result = tmaptapi.invokeRoute("T타워", 126.984098f, 37.566385f);
+                    boolean result = tmaptapi.invokeRoute(markerItem.getName(), (float)markerItem.getTMapPoint().getLongitude(), (float)markerItem.getTMapPoint().getLatitude());
+                    Log.d("tmapicon", "Tmap 경로탐색" + result);
+                    //TODO : 왜 False 나오는지 모르겠다
+                }
+                //기존 구글검색 기능 Intent
+//                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+//                intent.putExtra(SearchManager.QUERY, markerItem.getName());
+//                startActivity(intent);
             }
         });
 
