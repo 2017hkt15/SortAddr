@@ -82,7 +82,7 @@ public class MarkerController {
         placeMarker.setIcon(passMarkerIcon);
         placeMarker.setPosition(markerCenterDx, markerCenterDy);
         placeMarker.setCanShowCallout(true);
-        placeMarker.setAutoCalloutVisible(true);
+        placeMarker.setAutoCalloutVisible(false);
         placeMarker.setCalloutTitle(placeName);
         placeMarker.setCalloutLeftImage(passMarkerIcon);
         placeMarker.setCalloutRightButtonImage(poiIcon);
@@ -90,7 +90,6 @@ public class MarkerController {
         // 배열리스트 및 지도에 마커 추가
         tmapView.addMarkerItem(placeMarker.getID(), placeMarker);
         markerList.add(placeMarker);
-
     }
 
     // 위도, 경도, 마커(장소) 이름
@@ -110,7 +109,7 @@ public class MarkerController {
         placeMarker.setIcon(passMarkerIcon);
         placeMarker.setPosition(markerCenterDx, markerCenterDy);
         placeMarker.setCanShowCallout(true);
-        placeMarker.setAutoCalloutVisible(true);
+        placeMarker.setAutoCalloutVisible(false);
         placeMarker.setCalloutTitle(placeName);
         placeMarker.setCalloutLeftImage(passMarkerIcon);
         placeMarker.setCalloutRightButtonImage(poiIcon);
@@ -118,7 +117,6 @@ public class MarkerController {
         // 배열리스트 및 지도에 마커 추가
         markerList.add(pos, placeMarker);
         tmapView.addMarkerItem(placeMarker.getID(), placeMarker);
-
     }
 
     public void addMarker2(float latitude, float longitude, String placeName, int pos) {
@@ -161,7 +159,7 @@ public class MarkerController {
         placeMarker.setIcon(startMarkerIcon);
         placeMarker.setPosition(markerCenterDx, markerCenterDy);
         placeMarker.setCanShowCallout(true);
-        placeMarker.setAutoCalloutVisible(true);
+        placeMarker.setAutoCalloutVisible(false);
         placeMarker.setCalloutTitle(placeName);
         placeMarker.setCalloutLeftImage(startMarkerIcon);
         placeMarker.setCalloutRightButtonImage(poiIcon);
@@ -254,10 +252,10 @@ public class MarkerController {
         placeMarker.setIcon(passMarkerIcon);
         placeMarker.setPosition(markerCenterDx, markerCenterDy);
         placeMarker.setCanShowCallout(true);
-        placeMarker.setAutoCalloutVisible(true);
         placeMarker.setCalloutTitle(placeName);
         placeMarker.setCalloutLeftImage(passMarkerIcon);
         placeMarker.setCalloutRightButtonImage(poiIcon);
+        placeMarker.setAutoCalloutVisible(true);
 
         // 배열리스트 및 지도에 마커 추가
         tmapView.addMarkerItem(placeMarker.getID(), placeMarker);
